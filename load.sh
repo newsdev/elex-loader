@@ -21,7 +21,7 @@ psql elex -c "DROP TABLE IF EXISTS races; CREATE TABLE races (
     uncontested boolean
 );"
 
-elex init-races '11-03-2015' | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+elex init-races $RACEDATE | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
 psql elex -c "DROP TABLE IF EXISTS reporting_units; CREATE TABLE reporting_units(
     description varchar,
