@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ### Export environment variables
 ```
-export AP_API_KE=<your API key>
+export AP_API_KEY=<your API key>
 ```
 
 See more [in the loader docs]().
