@@ -3,6 +3,14 @@ Relies on [the NYT/NPR AP election loader]() to get results from the AP API. Dem
 
 ## Getting started
 
+The following things are assumed to be true in this documentation.
+
+* You are running OSX.
+* You are using Python 2.7. (Probably the version that came OSX.)
+* You have pip, [virtualenv](https://pypi.python.org/pypi/virtualenv) and [virtualenvwrapper](https://pypi.python.org/pypi/virtualenvwrapper) installed and working.
+
+See "Chapter 2: Install Virtualenv" of NPR's [development environment blog post](http://blog.apps.npr.org/2013/06/06/how-to-setup-a-developers-environment.html) for details.
+
 ### Install the software
 ```
 git clone https://github.com/nprapps/ap-election-loader && cd ap-election-loader
