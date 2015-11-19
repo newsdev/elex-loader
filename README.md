@@ -13,7 +13,7 @@ See "Chapter 2: Install Virtualenv" of NPR's [development environment blog post]
 ## Getting started
 
 #### 1. Postgres
-```
+```bash
 brew install postgres
 createuser elex
 createdb elex
@@ -23,7 +23,7 @@ psql elex
 ```
 
 #### 2. Loader scripts
-```
+```bash
 git clone https://github.com/nprapps/ap-election-loader && cd ap-election-loader
 mkvirtualenv ap-election-loader
 pip install -r requirements.txt
@@ -32,13 +32,13 @@ pip install -r requirements.txt
 #### 3. Export environment variables
 Edit `~/.virtualenvs/ap-election-loader/bin/postactivate` and add this line:
 
-```
-export AP_API_KEY=<WHATEVER YOUR API IS>
+```bash
+export AP_API_KEY=<MY_AP_API_KEY>
 ```
 
 Then do this:
 
-```
+```bash
 source ~/.virtualenvs/ap-election-loader/bin/postactivate
 ```
 
@@ -55,7 +55,7 @@ See more [in the loader docs]().
 * Loads initial data about the race, candidates, ballot issues and reporting units.
 
 * **Note**: Creates tables if they don't exist.
-```
+```bash
 ./init
 ```
 
@@ -66,6 +66,6 @@ See more [in the loader docs]().
 
 * **Note**: Creates tables if they don't exist.
 
-```
+```bash
 ./update
 ```
