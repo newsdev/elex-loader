@@ -43,16 +43,16 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
 elex results $RACEDATE | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
 ## THIS SHOULD MATCH YOUR `name_overrides.csv`
-echo "Create name_overrides table"
-psql elex -c "DROP TABLE IF EXISTS name_overrides CASCADE; CREATE TABLE name_overrides(
+echo "Create overrides table"
+psql elex -c "DROP TABLE IF EXISTS candidate_overrides CASCADE; CREATE TABLE candidate_overrides(
     unique_id varchar,
-    first varchar,
-    last varchar
+    nyt_name varchar,
+    nyt_description varchar
 );"
 
-psql elex -c "COPY name_overrides FROM '`pwd`/name_overrides.csv' DELIMITER ',' CSV HEADER;"
+psql elex -c "COPY candidate_overrides FROM '`pwd`/candidate_overrides.csv' DELIMITER ',' CSV HEADER;"
 
 psql elex -c "CREATE OR REPLACE VIEW elex_results as
-    SELECT n.last as display_last, n.first as display_first, r.* from results as r
-        LEFT JOIN name_overrides as n on r.unique_id = n.unique_id
+    SELECT n.nyt_name as nyt_name, n.nyt_description as nyt_description, r.* from results as r
+        LEFT JOIN candidate_overrides as n on r.unique_id = n.unique_id
 ;"
