@@ -1,1 +1,1 @@
--e git+git@github.com:newsdev/nyt-ap-elections.git@cli#egg=nyt-ap-elections
+-e git+git@github.com:newsdev/nyt-ap-elections.git@#egg=nyt-ap-elections
