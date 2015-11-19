@@ -39,7 +39,7 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     winner boolean
 );"
 
-elex get-results $RACEDATE | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+elex results $RACEDATE | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
 psql elex -c "DROP TABLE IF EXISTS name_overrides; CREATE TABLE name_overrides(
     candidateid int,
