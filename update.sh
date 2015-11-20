@@ -30,6 +30,7 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     precinctstotal int,
     reportingunitid varchar,
     reportingunitname varchar,
+    runoff bool,
     seatname varchar,
     seatnum varchar,
     statename varchar,
