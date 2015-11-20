@@ -4,6 +4,7 @@ source config.sh
 
 echo "Initialize races"
 psql elex -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
+    id varchar,
     raceid varchar,
     racetype varchar,
     racetypeid varchar,
@@ -26,6 +27,7 @@ elex races $RACEDATE | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEA
 
 echo "Initialize reporting units"
 psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
+    id varchar,
     reportingunitid varchar,
     reportingunitname varchar,
     description varchar,
@@ -55,6 +57,7 @@ elex reporting-units $RACEDATE | psql elex -c "COPY reporting_units FROM stdin D
 
 echo "Initialize candidates"
 psql elex -c "CREATE TABLE candidates(
+    id varchar,
     unique_id varchar,
     candidateid varchar,
     ballotorder int,
@@ -69,6 +72,7 @@ elex candidates $RACEDATE | psql elex -c "DROP TABLE IF EXISTS candidates CASCAD
 
 echo "Initialize ballot positions"
 psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
+    id varchar,
     unique_id varchar,
     candidateid varchar,
     ballotorder int,

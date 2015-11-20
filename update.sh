@@ -3,6 +3,7 @@
 source config.sh
 
 psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
+    id varchar,
     unique_id varchar,
     raceid varchar,
     racetype varchar,
