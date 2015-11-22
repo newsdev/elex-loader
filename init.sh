@@ -56,7 +56,7 @@ psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporti
 elex reporting-units $RACEDATE | psql elex -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize candidates"
-psql elex -c "CREATE TABLE candidates(
+psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     id varchar,
     unique_id varchar,
     candidateid varchar,
@@ -68,7 +68,7 @@ psql elex -c "CREATE TABLE candidates(
     polnum varchar
 );"
 
-elex candidates $RACEDATE | psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+elex candidates $RACEDATE | psql elex -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize ballot positions"
 psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
