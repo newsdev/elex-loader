@@ -61,7 +61,7 @@ See more [in the loader docs]().
 
 * **Note**: Creates tables if they don't exist.
 ```bash
-./init
+./init.sh
 ```
 
 #### 2. Updates
@@ -72,5 +72,11 @@ See more [in the loader docs]().
 * **Note**: Creates tables if they don't exist.
 
 ```bash
-./update
+./update.sh
+```
+
+#### 3. Daemonized
+The daemon runs `update.sh` every 30 seconds.
+```
+./daemon.sh
 ```
