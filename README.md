@@ -10,7 +10,7 @@ The following things are assumed to be true in this documentation.
 
 See "Chapter 2: Install Virtualenv" of NPR's [development environment blog post](http://blog.apps.npr.org/2013/06/06/how-to-setup-a-developers-environment.html) for details.
 
-Having trouble on OS X El Capitan? Try [Can't install virtualenvwrapper on OSX 10.11 El Capitan](http://stackoverflow.com/questions/32086631/cant-install-virtualenvwrapper-on-osx-10-11-el-capitan).
+Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 10.11 El Capitan](http://stackoverflow.com/questions/32086631/cant-install-virtualenvwrapper-on-osx-10-11-el-capitan).
 
 ## Getting started
 
