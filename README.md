@@ -51,12 +51,17 @@ See more [in the loader docs]().
 
 * Edit [candidate_overrides.csv](https://github.com/newsdev/ap-election-loader/blob/master/candidate_overrides.csv) if you'd like to override candidates / ballot positions with different names or descriptions.
 
+* Bootstrap your env and database.
+```
+./bootstrap.sh
+```
+
 #### 1. Initial data
 * Loads initial data about the race, candidates, ballot issues and reporting units.
 
 * **Note**: Creates tables if they don't exist.
 ```bash
-./init
+./init.sh
 ```
 
 #### 2. Updates
@@ -67,5 +72,11 @@ See more [in the loader docs]().
 * **Note**: Creates tables if they don't exist.
 
 ```bash
-./update
+./update.sh
+```
+
+#### 3. Daemonized
+The daemon runs `update.sh` every 30 seconds.
+```
+./daemon.sh
 ```
