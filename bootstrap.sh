@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir /tmp/2015-11-21
+mkdir /tmp/$RACEDATE
 export ELEX_RECORDING=flat
 export ELEX_LOGGING_DIR=/tmp/2015-11-21
 

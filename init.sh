@@ -2,6 +2,9 @@
 
 source config.sh
 
+date "+STARTED: %H:%M:%S"
+echo "------------------------------"
+
 echo "Initialize races"
 psql elex -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
     id varchar,
@@ -84,3 +87,6 @@ psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot
 );"
 
 elex ballot-positions $RACEDATE | psql elex -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+
+echo "------------------------------"
+date "+ENDED: %H:%M:%S"

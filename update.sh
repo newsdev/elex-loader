@@ -2,6 +2,9 @@
 
 source config.sh
 
+date "+STARTED: %H:%M:%S"
+echo "------------------------------"
+
 psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     id varchar,
     unique_id varchar,
@@ -58,3 +61,6 @@ psql elex -c "CREATE OR REPLACE VIEW elex_results as
     SELECT n.nyt_name as nyt_name, n.nyt_description as nyt_description, r.* from results as r
         LEFT JOIN candidate_overrides as n on r.unique_id = n.unique_id
 ;"
+
+echo "------------------------------"
+date "+ENDED: %H:%M:%S"
