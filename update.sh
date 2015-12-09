@@ -45,7 +45,7 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     winner bool
 );"
 
-elex results $RACEDATE | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+elex results $RACEDATE -t | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
 ## THIS SHOULD MATCH YOUR `name_overrides.csv`
 echo "Create overrides table"

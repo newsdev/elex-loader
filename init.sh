@@ -26,7 +26,7 @@ psql elex -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
     uncontested boolean
 );"
 
-elex races $RACEDATE | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+elex races $RACEDATE -t | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize reporting units"
 psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
@@ -56,7 +56,7 @@ psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporti
     votecount int
 );"
 
-elex reporting-units $RACEDATE | psql elex -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
+elex reporting-units $RACEDATE -t | psql elex -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize candidates"
 psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
@@ -71,7 +71,7 @@ psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     polnum varchar
 );"
 
-elex candidates $RACEDATE | psql elex -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+elex candidates $RACEDATE -t | psql elex -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize ballot positions"
 psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
@@ -86,7 +86,7 @@ psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot
     seatname varchar
 );"
 
-elex ballot-positions $RACEDATE | psql elex -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+elex ballot-measures $RACEDATE -t | psql elex -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
