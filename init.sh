@@ -88,5 +88,24 @@ psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot
 
 elex ballot-measures $RACEDATE -t | psql elex -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
+echo "Create candidate overrides table"
+psql elex -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
+    candidate_unique_id varchar,
+    nyt_candidate_name varchar,
+    nyt_candidate_description varchar
+);"
+
+echo "Create race overrides table"
+psql elex -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
+    race_raceid varchar,
+    nyt_race_name varchar,
+    nyt_race_description varchar,
+    accept_ap_calls bool,
+    nyt_winner bool
+);"
+
+psql elex -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
+psql elex -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
+
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
