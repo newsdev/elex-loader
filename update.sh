@@ -47,10 +47,20 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
 
 elex results $RACEDATE -t | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
+psql elex -c "CREATE OR REPLACE VIEW elex_races as
+   SELECT o.*, r.* from races as r
+       LEFT JOIN override_races as o on r.raceid = o.race_raceid
+;"
+
 psql elex -c "CREATE OR REPLACE VIEW elex_results as
    SELECT o.*, c.*, r.* from results as r
-       LEFT JOIN override_candidates as c on r.unique_id = c.candidate_unique_id
+       LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
        LEFT JOIN override_races as o on r.raceid = o.race_raceid
+;"
+
+psql elex -c "CREATE OR REPLACE VIEW elex_candidates as
+   SELECT c.*, r.* from candidates as r
+       LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
 ;"
 
 echo "------------------------------"

@@ -41,9 +41,9 @@ psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporti
     national varchar,
     officeid varchar,
     officename varchar,
-    precinctsreporting int,
+    precinctsreporting integer,
     precinctsreportingpct numeric,
-    precinctstotal int,
+    precinctstotal integer,
     raceid varchar,
     racetype varchar,
     racetypeid varchar,
@@ -53,7 +53,7 @@ psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporti
     statepostal varchar,
     test bool,
     uncontested bool,
-    votecount int
+    votecount integer
 );"
 
 elex reporting-units $RACEDATE -t | psql elex -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
@@ -63,7 +63,7 @@ psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     id varchar,
     unique_id varchar,
     candidateid varchar,
-    ballotorder int,
+    ballotorder integer,
     first varchar,
     last varchar,
     party varchar,
@@ -78,7 +78,7 @@ psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot
     id varchar,
     unique_id varchar,
     candidateid varchar,
-    ballotorder int,
+    ballotorder integer,
     description varchar,
     last varchar,
     polid varchar,
@@ -90,9 +90,10 @@ elex ballot-measures $RACEDATE -t | psql elex -c "COPY ballot_positions FROM std
 
 echo "Create candidate overrides table"
 psql elex -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
-    candidate_unique_id varchar,
+    candidate_candidateid varchar,
     nyt_candidate_name varchar,
-    nyt_candidate_description varchar
+    nyt_candidate_description varchar,
+    nyt_races integer[]
 );"
 
 echo "Create race overrides table"
@@ -101,7 +102,8 @@ psql elex -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override
     nyt_race_name varchar,
     nyt_race_description varchar,
     accept_ap_calls bool,
-    nyt_winner bool
+    nyt_called bool,
+    nyt_winner varchar
 );"
 
 psql elex -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
