@@ -92,6 +92,7 @@ echo "Create candidate overrides table"
 psql elex -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
     candidate_candidateid varchar,
     nyt_candidate_name varchar,
+    nyt_candidate_important bool,
     nyt_candidate_description varchar,
     nyt_races integer[]
 );"
@@ -103,7 +104,8 @@ psql elex -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override
     nyt_race_description varchar,
     accept_ap_calls bool,
     nyt_called bool,
-    nyt_winner varchar
+    nyt_winner varchar,
+    nyt_race_important bool
 );"
 
 psql elex -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"

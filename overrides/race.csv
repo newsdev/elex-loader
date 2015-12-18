@@ -1,3 +1,3 @@
-race_raceid,nyt_race_name,nyt_race_description,accept_ap_call,nyt_called,nyt_winner
-31146,New Hampshire democratic primary,The New Hampshire state democratic presidential primary,true,false,
-31796,New Hampshire republican primary,The New Hampshire state republican presidential primary,true,false,
+race_raceid,nyt_race_name,nyt_race_description,accept_ap_call,nyt_called,nyt_winner,nyt_race_important
+31146,New Hampshire Republican primary,The state of New Hampshire's Republican Presidential primary,true,false,,true
+31796,New Hampshire Democratic primary,The state of New Hampshire's Democratic Presidential primary,true,false,,true
