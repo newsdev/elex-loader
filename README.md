@@ -1,5 +1,5 @@
 # AP ELECTION LOADER
-Relies on [the NYT/NPR AP election loader]() to get results from the AP API. Demonstrates a method putting those results into a Postgres database using the COPY method and the loader's CSV output.
+Relies on [Elex](https://github.com/newsdev/elex), a command-line tool to get results from the AP Election API 2.0. Demonstrates a method putting those results into a Postgres database using the COPY method and the loader's CSV output.
 
 ## Assumptions
 The following things are assumed to be true in this documentation.
