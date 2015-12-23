@@ -46,14 +46,12 @@ Then do this:
 source ~/.virtualenvs/elex-loader/bin/postactivate
 ```
 
-See more [in the loader docs]().
-
 ## Run the loader
 
 #### 0. Configuration
 * Edit [config.sh](https://github.com/newsdev/elex-loader/blob/master/config.sh) to set the racedate you want.
 
-* Edit [candidate_overrides.csv](https://github.com/newsdev/elex-loader/blob/master/candidate_overrides.csv) if you'd like to override candidates / ballot positions with different names or descriptions.
+* Edit [candidate_overrides.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/candidate.csv) if you'd like to override candidates / ballot positions with different names or descriptions.
 
 * Bootstrap your env and database.
 ```
