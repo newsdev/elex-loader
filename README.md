@@ -26,22 +26,24 @@ psql elex
 
 #### 2. Loader scripts
 ```bash
-git clone https://github.com/nprapps/ap-election-loader && cd ap-election-loader
-mkvirtualenv ap-election-loader
+git clone https://github.com/newsdev/elex-loader && cd elex-loader
+mkvirtualenv elex-loader
 pip install -r requirements.txt
 ```
 
 #### 3. Export environment variables
-Edit `~/.virtualenvs/ap-election-loader/bin/postactivate` and add this line:
+Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
 
 ```bash
 export AP_API_KEY=<MY_AP_API_KEY>
 ```
 
+Ask Jeremy Bowers, Wilson Andrews or Tom Giratikanon for the API key.
+
 Then do this:
 
 ```bash
-source ~/.virtualenvs/ap-election-loader/bin/postactivate
+source ~/.virtualenvs/elex-loader/bin/postactivate
 ```
 
 See more [in the loader docs]().
@@ -49,9 +51,9 @@ See more [in the loader docs]().
 ## Run the loader
 
 #### 0. Configuration
-* Edit [config.sh](https://github.com/newsdev/ap-election-loader/blob/master/config.sh) to set the racedate you want.
+* Edit [config.sh](https://github.com/newsdev/elex-loader/blob/master/config.sh) to set the racedate you want.
 
-* Edit [candidate_overrides.csv](https://github.com/newsdev/ap-election-loader/blob/master/candidate_overrides.csv) if you'd like to override candidates / ballot positions with different names or descriptions.
+* Edit [candidate_overrides.csv](https://github.com/newsdev/elex-loader/blob/master/candidate_overrides.csv) if you'd like to override candidates / ballot positions with different names or descriptions.
 
 * Bootstrap your env and database.
 ```
