@@ -14,6 +14,7 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     ballotorder int,
     candidateid varchar,
     description varchar,
+    electiondate varchar,
     fipscode char(5),
     first varchar,
     incumbent bool,
