@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source config.sh
-
 date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
