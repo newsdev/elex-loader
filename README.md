@@ -36,6 +36,7 @@ Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
 
 ```bash
 export AP_API_KEY=<MY_AP_API_KEY>
+export RACEDATE=2016-02-01
 ```
 
 Ask Jeremy Bowers, Wilson Andrews or Tom Giratikanon for the API key.
