@@ -35,7 +35,7 @@ Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
 
 ```bash
 export AP_API_KEY=<MY_AP_API_KEY>
-export RACEDATE=2016-02-01
+export RACEDATE=YYYY-MM-DD
 ```
 
 The `RACEDATE` environment variable determines which database the loader will be loading data into. The formula for the database name is `elex_$RACEDATE`. Ask [Jeremy Bowers](mailto:jeremy.bowers@nytimes.com), [Wilson Andrews](wilson.andrews@nytimes.com) or [Tom Giratikanon](tom.giratikanon@nytimes.com) for our API key if you don't have it already.
