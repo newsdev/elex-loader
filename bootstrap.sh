@@ -2,5 +2,5 @@
 
 mkdir -p /tmp/$RACEDATE
 
-dropdb elex
-createdb elex
+dropdb elex_$RACEDATE
+createdb elex_$RACEDATE

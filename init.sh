@@ -4,7 +4,7 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 echo "Initialize races"
-psql elex -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
     id varchar,
     raceid varchar,
     racetype varchar,
@@ -25,10 +25,10 @@ psql elex -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
     uncontested boolean
 );"
 
-elex races $RACEDATE -t | psql elex -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+elex races $RACEDATE -t | psql elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize reporting units"
-psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
     id varchar,
     reportingunitid varchar,
     reportingunitname varchar,
@@ -56,10 +56,10 @@ psql elex -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporti
     votecount integer
 );"
 
-elex reporting-units $RACEDATE -t | psql elex -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
+elex reporting-units $RACEDATE -t | psql elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize candidates"
-psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     id varchar,
     unique_id varchar,
     candidateid varchar,
@@ -71,10 +71,10 @@ psql elex -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     polnum varchar
 );"
 
-elex candidates $RACEDATE -t | psql elex -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+elex candidates $RACEDATE -t | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize ballot positions"
-psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
     id varchar,
     unique_id varchar,
     candidateid varchar,
@@ -86,10 +86,10 @@ psql elex -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot
     seatname varchar
 );"
 
-elex ballot-measures $RACEDATE -t | psql elex -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+elex ballot-measures $RACEDATE -t | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Create candidate overrides table"
-psql elex -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
     candidate_candidateid varchar,
     nyt_candidate_name varchar,
     nyt_candidate_important bool,
@@ -98,7 +98,7 @@ psql elex -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE ove
 );"
 
 echo "Create race overrides table"
-psql elex -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
     race_raceid varchar,
     nyt_race_name varchar,
     nyt_race_description varchar,
@@ -108,8 +108,8 @@ psql elex -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override
     nyt_race_important bool
 );"
 
-psql elex -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
-psql elex -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
+psql elex_$RACEDATE -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
+psql elex_$RACEDATE -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"

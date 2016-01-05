@@ -3,7 +3,7 @@
 date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
-psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
+psql elex_$RACEDATE -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     id varchar,
     unique_id varchar,
     raceid varchar,
@@ -44,20 +44,20 @@ psql elex -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     winner bool
 );"
 
-elex results $RACEDATE -t | psql elex -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+elex results $RACEDATE -t | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
-psql elex -c "CREATE OR REPLACE VIEW elex_races as
+psql elex_$RACEDATE -c "CREATE OR REPLACE VIEW elex_races as
    SELECT o.*, r.* from races as r
        LEFT JOIN override_races as o on r.raceid = o.race_raceid
 ;"
 
-psql elex -c "CREATE OR REPLACE VIEW elex_results as
+psql elex_$RACEDATE -c "CREATE OR REPLACE VIEW elex_results as
    SELECT o.*, c.*, r.* from results as r
        LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
        LEFT JOIN override_races as o on r.raceid = o.race_raceid
 ;"
 
-psql elex -c "CREATE OR REPLACE VIEW elex_candidates as
+psql elex_$RACEDATE -c "CREATE OR REPLACE VIEW elex_candidates as
    SELECT c.*, r.* from candidates as r
        LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
 ;"
