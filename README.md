@@ -17,10 +17,7 @@ Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 
 #### 1. Postgres
 ```bash
 brew install postgres
-createuser elex
-psql
-    alter user elex with superuser;
-    \q
+./createuser.sh       # create the elex role as a superuser
 ```
 
 #### 2. Loader scripts
@@ -51,17 +48,18 @@ source ~/.virtualenvs/elex-loader/bin/postactivate
 #### 0. Configuration
 * Edit [candidate.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/candidate.csv) and/or [race.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/race.csv) if you'd like to override race descriptions and/or candidates or ballot positions with different names or descriptions.
 
-* Bootstrap your env and database.
-```
-./bootstrap.sh
-```
-
 #### 1. Initial data
 * Loads initial data about the race, candidates, ballot issues and reporting units.
 
-* **Note**: Creates tables if they don't exist.
+* **Note**: Creates database and tables for this date if they don't exist.
 ```bash
 ./init.sh
+```
+
+For this or other shell commands, you can set the race date manually, instead of using the environmental variable (in case you need to load data for multiple dates):
+
+```
+./init.sh 2016-02-01
 ```
 
 #### 2a. Updates
@@ -75,6 +73,6 @@ source ~/.virtualenvs/elex-loader/bin/postactivate
 
 #### 3b. Daemonized
 The daemon runs `update.sh` every 30 seconds.
-```
+```bash
 ./daemon.sh
 ```

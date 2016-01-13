@@ -1,0 +1,19 @@
+{
+  "name": "elex-loader",
+  "version": "1.0.0",
+  "description": "The NYT AP election loader scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newsdev/elex-loader.git"
+  },
+  "author": "Jeremy Bowers <jeremy.bowers@nytimes.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newsdev/elex-loader/issues"
+  },
+  "homepage": "https://github.com/newsdev/elex-loader#readme"
+}
