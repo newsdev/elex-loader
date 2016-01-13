@@ -12,7 +12,7 @@ psql elex_$RACEDATE -c "DROP TABLE IF EXISTS results CASCADE; CREATE TABLE resul
     ballotorder int,
     candidateid varchar,
     description varchar,
-    electiondate date,
+    electiondate varchar,
     fipscode char(5),
     first varchar,
     incumbent bool,
