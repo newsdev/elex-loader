@@ -1,7 +1,31 @@
 #!/bin/bash
 
+RACEDATE=$1
+
+if [[ $RACEDATE -eq 0 ]] ; then
+    echo 'Provide a race date, such as 2016-02-01'
+    exit 1
+fi
+
+if [[ -z "$AP_API_KEY" ]] ; then
+    echo "Missing environmental variable AP_API_KEY. Try 'export AP_API_KEY=MY_API_KEY_GOES_HERE'."
+    exit 1
+fi
+
 date "+STARTED: %H:%M:%S"
 echo "------------------------------"
+
+echo "Create elex role"
+psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='elex'" | grep -q 1 || createuser elex
+
+echo "Make elex a superuser"
+psql postgres -tAc "alter user elex with superuser;"
+
+echo "Drop elex_$1 if it exists"
+dropdb elex_$RACEDATE --if-exists
+
+echo "Create elex_$RACEDATE"
+psql -l | grep -q elex_$RACEDATE || createdb elex_$RACEDATE
 
 echo "Initialize races"
 psql elex_$RACEDATE -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
