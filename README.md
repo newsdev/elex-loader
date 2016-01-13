@@ -34,7 +34,7 @@ Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
 export AP_API_KEY=<MY_AP_API_KEY>
 ```
 
-Ask [Jeremy Bowers](mailto:jeremy.bowers@nytimes.com), [Wilson Andrews](wilson.andrews@nytimes.com) or [Tom Giratikanon](tom.giratikanon@nytimes.com) for our API key if you don't have it already.
+The RACEDATE environment variable determines which database the loader will be loading data into. The formula for the database name is elex_$RACEDATE. Ask [Jeremy Bowers](mailto:jeremy.bowers@nytimes.com), [Wilson Andrews](wilson.andrews@nytimes.com) or [Tom Giratikanon](tom.giratikanon@nytimes.com) for our API key if you don't have it already.
 
 Then do this:
 
@@ -52,7 +52,13 @@ source ~/.virtualenvs/elex-loader/bin/postactivate
 
 * **Note**: Creates role, database and tables if they don't exist.
 ```bash
-./init.sh <RACE_DATE> # example: ./init.sh 2016-02-01
+./init.sh
+```
+
+For this or any other shell commands, you can specify the race date manually:
+
+```
+./init.sh 2016-02-01
 ```
 
 #### 2a. Updates
@@ -61,11 +67,11 @@ source ~/.virtualenvs/elex-loader/bin/postactivate
 * **Note**: You might want to run this in a loop or on a cron.
 
 ```bash
-./update.sh <RACE_DATE> # example: ./update.sh 2016-02-01
+./update.sh
 ```
 
 #### 3b. Daemonized
 The daemon runs `update.sh` every 30 seconds.
 ```bash
-./daemon.sh <RACE_DATE> # example: ./daemon.sh 2016-02-01
+./daemon.sh
 ```

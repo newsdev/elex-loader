@@ -1,8 +1,11 @@
 #!/bin/bash
 
-RACEDATE=$1
+# set RACEDATE from the first argument, if it exists
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
+fi
 
-if [[ $RACEDATE -eq 0 ]] ; then
+if [[ -z $RACEDATE ]] ; then
     echo 'Provide a race date, such as 2016-02-01'
     exit 1
 fi
