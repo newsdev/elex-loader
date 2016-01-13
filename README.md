@@ -32,6 +32,7 @@ Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
 
 ```bash
 export AP_API_KEY=<MY_AP_API_KEY>
+export RACEDATE=YYYY-MM-DD
 ```
 
 The RACEDATE environment variable determines which database the loader will be loading data into. The formula for the database name is elex_$RACEDATE. Ask [Jeremy Bowers](mailto:jeremy.bowers@nytimes.com), [Wilson Andrews](wilson.andrews@nytimes.com) or [Tom Giratikanon](tom.giratikanon@nytimes.com) for our API key if you don't have it already.
@@ -47,15 +48,15 @@ source ~/.virtualenvs/elex-loader/bin/postactivate
 #### 0. Configuration
 * Edit [candidate.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/candidate.csv) and/or [race.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/race.csv) if you'd like to override race descriptions and/or candidates or ballot positions with different names or descriptions.
 
-#### 0. Initial data
+#### 1. Initial data
 * Loads initial data about the race, candidates, ballot issues and reporting units.
 
-* **Note**: Creates role, database and tables if they don't exist.
+* **Note**: Creates database and tables for this date if they don't exist.
 ```bash
 ./init.sh
 ```
 
-For this or any other shell commands, you can specify the race date manually:
+For this or other shell commands, you can set the race date manually, instead of using the environmental variable (in case you need to load data for multiple dates):
 
 ```
 ./init.sh 2016-02-01
