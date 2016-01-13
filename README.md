@@ -17,6 +17,7 @@ Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 
 #### 1. Postgres
 ```bash
 brew install postgres
+./createuser.sh       # create the elex role as a superuser
 ```
 
 #### 2. Loader scripts
