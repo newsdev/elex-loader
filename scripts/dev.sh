@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # set RACEDATE from the first argument, if it exists
 if [[ ! -z $1 ]] ; then

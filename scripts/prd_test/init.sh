@@ -129,8 +129,8 @@ psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS overrid
     nyt_race_important bool
 );"
 
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
+# psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
+# psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
