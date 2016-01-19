@@ -5,20 +5,25 @@ import os
 from fabric import api, operations, contrib
 from fabric.state import env
 
-PROJECT_NAME = 'elex-loader'
 ENVIRONMENTS = {
     "prd": {
         "hosts": [os.environ.get('ELEX_LOADER_PRD_HOST', None)],
     }
 }
 
+env.project_name = 'elex-loader'
 env.user = "ubuntu"
 env.forward_agent = True
 env.branch = "master"
 
+env.racedate = os.environ.get('RACEDATE', None)
 env.hosts = ['127.0.0.1']
 env.dbs = ['127.0.0.1']
 env.settings = None
+
+@api.task
+def r(racedate):
+    env.racedate = racedate
 
 @api.task
 def development():
@@ -48,20 +53,27 @@ def e(environment):
 
 @api.task
 def clone():
-    api.run('git clone git@github.com:newsdev/%s.git /home/ubuntu/%s' % (PROJECT_NAME, PROJECT_NAME))
+    api.run('git clone git@github.com:newsdev/%(project_name)s.git /home/ubuntu/%(project_name)s' % env)
 
 @api.task
 def pull():
-    api.run('cd /home/ubuntu/%s; git fetch' % PROJECT_NAME)
-    api.run('cd /home/ubuntu/%s; git pull origin %s' % (PROJECT_NAME, env.branch))
+    api.run('cd /home/ubuntu/%(project_name)s; git fetch; git pull origin %(project_name)s' % env)
 
 @api.task
 def pip_install():
-    api.run('cd /home/ubuntu/%s; workon %s && pip install -r requirements.txt' % (PROJECT_NAME, PROJECT_NAME))
+    api.run('cd /home/ubuntu/%(project_name)s; workon %(project_name)s && pip install -r requirements.txt' % env)
 
 @api.task
 def bounce_daemon():
-    api.run('sudo service %s restart' % PROJECT_NAME)
+    api.run('sudo service %(racedate)s restart' % env)
+
+@api.task
+def update():
+    api.run('export RACEDATE=%(racedate)s; cd /home/ubuntu/%(project_name)s; ./scripts/prd/update.sh' % env)
+
+@api.task
+def init():
+    api.run('export RACEDATE=%(racedate)s; cd /home/ubuntu/%(project_name)s; ./scripts/prd/init.sh' % env)
 
 @api.task
 def deploy():

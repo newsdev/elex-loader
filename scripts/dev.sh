@@ -16,6 +16,6 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 while [ 1 ]; do
-    ./update.sh $RACEDATE
+    ./dev/update.sh $RACEDATE
     sleep 30
 done
