@@ -57,7 +57,7 @@ def clone():
 
 @api.task
 def pull():
-    api.run('cd /home/ubuntu/%(project_name)s; git fetch; git pull origin %(project_name)s' % env)
+    api.run('cd /home/ubuntu/%(project_name)s; git fetch; git pull origin %(branch)s' % env)
 
 @api.task
 def pip_install():
