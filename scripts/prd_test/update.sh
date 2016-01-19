@@ -59,7 +59,7 @@ psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS results
     winner bool
 );"
 
-elex results $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+elex results $RACEDATE -t | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
 psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "CREATE OR REPLACE VIEW elex_races as
    SELECT o.*, r.* from races as r
