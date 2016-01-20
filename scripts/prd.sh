@@ -16,6 +16,6 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 while [ 1 ]; do
-    ./prd/update.sh $RACEDATE
+    /home/ubuntu/elex-loader/scripts/prd/update.sh $RACEDATE
     sleep 30
 done
