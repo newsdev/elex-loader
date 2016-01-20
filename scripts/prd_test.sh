@@ -16,6 +16,6 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 while [ 1 ]; do
-    /home/ubuntu/elex-loader/scripts/prd_test/update.sh $RACEDATE
+    workon elex-loader && /home/ubuntu/elex-loader/scripts/prd_test/update.sh $RACEDATE
     sleep 30
 done
