@@ -64,10 +64,6 @@ def pip_install():
     api.run('cd /home/ubuntu/%(project_name)s; workon %(project_name)s && pip install -r requirements.txt' % env)
 
 @api.task
-def bounce_daemon():
-    api.run('sudo service %(racedate)s restart' % env)
-
-@api.task
 def update():
     api.run('export RACEDATE=%(racedate)s; cd /home/ubuntu/%(project_name)s; ./scripts/prd/update.sh' % env)
 
@@ -79,4 +75,3 @@ def init():
 def deploy():
     pull()
     pip_install()
-    bounce_daemon()
