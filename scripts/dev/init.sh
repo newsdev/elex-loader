@@ -114,23 +114,22 @@ psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE
     candidate_candidateid varchar,
     nyt_candidate_name varchar,
     nyt_candidate_important bool,
-    nyt_candidate_description varchar,
+    nyt_candidate_description text,
     nyt_races integer[]
 );"
 
 echo "Create race overrides table"
 psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
+    report bool,
+    report_description text,
     race_raceid varchar,
     nyt_race_name varchar,
-    nyt_race_description varchar,
+    nyt_race_description text,
     accept_ap_calls bool,
     nyt_called bool,
     nyt_winner varchar,
     nyt_race_important bool
 );"
-
-psql elex_$RACEDATE -c "COPY override_candidates FROM '`pwd`/overrides/candidate.csv' DELIMITER ',' CSV HEADER;"
-psql elex_$RACEDATE -c "COPY override_races FROM '`pwd`/overrides/race.csv' DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
