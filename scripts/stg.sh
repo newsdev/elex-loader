@@ -16,6 +16,6 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 while [ 1 ]; do
-    . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/prd_test/update.sh $RACEDATE
+    . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
     sleep 30
 done
