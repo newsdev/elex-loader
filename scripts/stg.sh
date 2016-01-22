@@ -15,7 +15,10 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
+. /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/init.sh $RACEDATE
+
 while [ 1 ]; do
     . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
+    export NODE_ENV="staging" && cd /home/ubuntu/election-2016/ && npm run ic && npm run bake
     sleep 30
 done
