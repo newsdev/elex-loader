@@ -15,7 +15,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-. /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/init.sh $RACEDATE
+# . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/init.sh $RACEDATE
 
 while [ 1 ]; do
     . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
