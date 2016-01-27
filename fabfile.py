@@ -70,13 +70,13 @@ def pip_install():
 def update(racedate=None):
     if racedate:
         env.racedate = racedate
-    api.run('export RACEDATE=%(racedate)s; cd /home/ubuntu/%(project_name)s; ./scripts/prd/update.sh' % env)
+    api.run('export RACEDATE=%(racedate)s; workon %(project_name)s && cd /home/ubuntu/%(project_name)s; ./scripts/%(settings)s/update.sh' % env)
 
 @api.task
 def init(racedate=None):
     if racedate:
         env.racedate = racedate
-    api.run('export RACEDATE=%(racedate)s; cd /home/ubuntu/%(project_name)s; ./scripts/prd/init.sh' % env)
+    api.run('export RACEDATE=%(racedate)s; workon %(project_name)s && cd /home/ubuntu/%(project_name)s; ./scripts/%(settings)s/init.sh' % env)
 
 
 @api.task
