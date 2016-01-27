@@ -120,6 +120,9 @@ psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS overrid
 
 echo "Create race overrides table"
 psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
+    nyt_race_preview text,
+    nyt_race_result_description text,
+    nyt_delegate_allocation text,
     report bool,
     report_description text,
     race_raceid varchar,
