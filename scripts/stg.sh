@@ -19,6 +19,6 @@ fi
 
 while [ 1 ]; do
     . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
-    export NODE_ENV="staging" && cd /home/ubuntu/election-2016/ && npm run ic $RACEDATE && npm run bake $RACEDATE
+    export NODE_ENV="staging" && cd /home/ubuntu/election-2016/ && npm run post-update $RACEDATE
     sleep 30
 done
