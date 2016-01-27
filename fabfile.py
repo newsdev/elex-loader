@@ -8,6 +8,9 @@ from fabric.state import env
 ENVIRONMENTS = {
     "prd": {
         "hosts": [os.environ.get('ELEX_LOADER_PRD_HOST', None)],
+    }, 
+    "stg": {
+        "hosts": [os.environ.get('ELEX_LOADER_STG_HOST', None)]
     }
 }
 
