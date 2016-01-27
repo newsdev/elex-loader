@@ -115,7 +115,8 @@ psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_candidates CASCADE; CREATE
     nyt_candidate_name varchar,
     nyt_candidate_important bool,
     nyt_candidate_description text,
-    nyt_races integer[]
+    nyt_races integer[],
+    nyt_winner bool
 );"
 
 echo "Create race overrides table"
@@ -130,7 +131,6 @@ psql elex_$RACEDATE -c "DROP TABLE IF EXISTS override_races CASCADE; CREATE TABL
     nyt_race_description text,
     accept_ap_calls bool,
     nyt_called bool,
-    nyt_winner varchar,
     nyt_race_important bool
 );"
 
