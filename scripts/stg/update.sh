@@ -69,7 +69,7 @@ function get_results
 
 function load_results
 {
-    cat results.csv | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    cat results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function replace_views
