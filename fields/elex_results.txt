@@ -1,0 +1,5 @@
+CREATE OR REPLACE VIEW elex_results as
+       SELECT o.*, c.*, r.* from results as r
+           LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
+           LEFT JOIN override_races as o on r.raceid = o.race_raceid
+    ;

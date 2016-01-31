@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# set RACEDATE from the first argument, if it exists
 if [[ ! -z $1 ]] ; then
     RACEDATE=$1
 fi
@@ -20,8 +22,8 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 
-cat fields/delgates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex delegates -t | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+echo "Create candidate overrides table"
+cat fields/candidate_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 
 
 echo "------------------------------"

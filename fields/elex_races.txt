@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW elex_races as
+       SELECT o.*, r.* from races as r
+           LEFT JOIN override_races as o on r.raceid = o.race_raceid
+    ;

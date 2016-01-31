@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# set RACEDATE from the first argument, if it exists
 if [[ ! -z $1 ]] ; then
     RACEDATE=$1
 fi
@@ -19,94 +17,25 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 echo "Drop elex_$1 if it exists"
-dropdb -h $ELEX_DB_HOST -U elex -elex_$RACEDATE --if-exists
+dropdb -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE --if-exists
 
 echo "Create elex_$RACEDATE"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elex elex_$RACEDATE
+psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 
 echo "Initialize races"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS races CASCADE; CREATE TABLE races (
-    id varchar,
-    raceid varchar,
-    racetype varchar,
-    racetypeid varchar,
-    description varchar,
-    electiondate varchar,
-    initialization_data boolean,
-    lastupdated date,
-    national boolean,
-    officeid varchar,
-    officename varchar,
-    party varchar,
-    seatname varchar,
-    seatnum varchar,
-    statename varchar,
-    statepostal char(2),
-    test boolean,
-    uncontested boolean
-);"
-
+cat fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex races $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize reporting units"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
-    id varchar,
-    reportingunitid varchar,
-    reportingunitname varchar,
-    description varchar,
-    electiondate varchar,
-    fipscode char(5),
-    initialization_data bool,
-    lastupdated date,
-    level varchar,
-    national varchar,
-    officeid varchar,
-    officename varchar,
-    precinctsreporting integer,
-    precinctsreportingpct numeric,
-    precinctstotal integer,
-    raceid varchar,
-    racetype varchar,
-    racetypeid varchar,
-    seatname varchar,
-    seatnum varchar,
-    statename varchar,
-    statepostal varchar,
-    test bool,
-    uncontested bool,
-    votecount integer
-);"
-
+cat fields/reporting_units.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex reporting-units $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize candidates"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
-    id varchar,
-    unique_id varchar,
-    candidateid varchar,
-    ballotorder integer,
-    first varchar,
-    last varchar,
-    party varchar,
-    polid varchar,
-    polnum varchar
-);"
-
+cat fields/candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex candidates $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize ballot positions"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
-    id varchar,
-    unique_id varchar,
-    candidateid varchar,
-    ballotorder integer,
-    description varchar,
-    last varchar,
-    polid varchar,
-    polnum varchar,
-    seatname varchar
-);"
-
+echo "Initialize ballot measures"
+cat fields/ballot_measures.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex ballot-measures $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"

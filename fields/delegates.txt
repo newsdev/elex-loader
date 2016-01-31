@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS delegates CASCADE; CREATE TABLE delegates(
+    level varchar,
+    party_total integer,
+    superdelegates_count integer,
+    last varchar,
+    state varchar,
+    candidateid varchar,
+    party_need integer,
+    party varchar,
+    delegates_count integer,
+    id varchar
+);

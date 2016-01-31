@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW elex_candidates as
+       SELECT c.*, r.* from candidates as r
+           LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
+    ;

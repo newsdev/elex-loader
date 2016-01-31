@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# set RACEDATE from the first argument, if it exists
 if [[ ! -z $1 ]] ; then
     RACEDATE=$1
 fi
@@ -15,7 +13,11 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-while [ 1 ]; do
-    . /home/ubuntu/.virtualenvs/elex-loader/bin/activate && . /home/ubuntu/.virtualenvs/elex-loader/bin/postactivate && /home/ubuntu/elex-loader/scripts/prd/update.sh $RACEDATE
-    sleep 30
-done
+date "+STARTED: %H:%M:%S"
+echo "------------------------------"
+
+echo "Create race overrides table"
+cat fields/race_overrides.txt | psql elex_$RACEDATE
+
+echo "------------------------------"
+date "+ENDED: %H:%M:%S"
