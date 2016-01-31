@@ -24,7 +24,7 @@ echo "------------------------------"
 
 echo "Create candidate overrides table"
 cat fields/candidate_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-
+cat fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
