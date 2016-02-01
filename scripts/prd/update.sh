@@ -17,7 +17,7 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 function drop_table { 
-    cat fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
+    cat /home/ubuntu/elex-loader/fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
 }
 
 function get_results {
@@ -29,9 +29,9 @@ function load_results {
 }
 
 function replace_views {
-    cat fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    cat fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    cat fields/elex_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
 if get_results; then
