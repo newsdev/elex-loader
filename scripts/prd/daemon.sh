@@ -18,5 +18,5 @@ fi
 while [ 1 ]; do
     ./scripts/prd/update.sh $RACEDATE
     export NODE_ENV="production" && cd /home/ubuntu/election-2016/ && npm run post-update $RACEDATE
-    sleep 30
+    sleep 10
 done
