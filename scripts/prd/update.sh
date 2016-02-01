@@ -21,11 +21,11 @@ function drop_table {
 }
 
 function get_results {
-    elex results $RACEDATE > results.csv
+    elex results $RACEDATE > /tmp/results.csv
 }
 
 function load_results {
-    cat results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /tmp/results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function replace_views {
@@ -38,10 +38,10 @@ if get_results; then
     drop_table
     load_results
     replace_views
-    rm -rf results.csv
+    rm -rf /tmp/results.csv
 else
     echo "ERROR: Bad response from AP. No results loaded."
-    rm -rf results.csv
+    rm -rf /tmp/results.csv
 fi
 
 echo "------------------------------"
