@@ -17,10 +17,10 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 echo "Drop elex_$1 if it exists"
-dropdb -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE --if-exists
+dropdb -h $ELEX_DB_HOST -U elex elex_$RACEDATE --if-exists
 
 echo "Create elex_$RACEDATE"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elex elex_$RACEDATE
 
 echo "Initialize races"
 cat fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
