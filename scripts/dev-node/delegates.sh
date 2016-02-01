@@ -20,7 +20,7 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 
-cat node_modules/fields/delegates.txt | psql elex_$RACEDATE
+cat node_modules/elex-loader/fields/delegates.txt | psql elex_$RACEDATE
 elex delegates -t | psql elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
 
 

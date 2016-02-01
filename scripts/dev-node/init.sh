@@ -23,19 +23,19 @@ echo "Create elex_$RACEDATE"
 psql -l | grep -q elex_$RACEDATE || createdb elex_$RACEDATE
 
 echo "Initialize races"
-cat node_modules/fields/races.txt | psql elex_$RACEDATE
+cat node_modules/elex-loader/fields/races.txt | psql elex_$RACEDATE
 elex races $RACEDATE -t | psql elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize reporting units"
-cat node_modules/fields/reporting_units.txt | psql elex_$RACEDATE
+cat node_modules/elex-loader/fields/reporting_units.txt | psql elex_$RACEDATE
 elex reporting-units $RACEDATE -t | psql elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize candidates"
-cat node_modules/fields/candidates.txt | psql elex_$RACEDATE
+cat node_modules/elex-loader/fields/candidates.txt | psql elex_$RACEDATE
 elex candidates $RACEDATE -t | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "Initialize ballot measures"
-cat node_modules/fields/ballot_measures.txt | psql elex_$RACEDATE
+cat node_modules/elex-loader/fields/ballot_measures.txt | psql elex_$RACEDATE
 elex ballot-measures $RACEDATE -t | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
