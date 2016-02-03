@@ -17,31 +17,31 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 function drop_table { 
-    cat fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
+    cat /home/ubuntu/elex-loader/fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
 }
 
 function get_results {
-    elex results $RACEDATE -t > results.csv
+    elex results $RACEDATE -t > /tmp/results.csv
 }
 
 function load_results {
-    cat results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /tmp/results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function replace_views {
-    cat fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    cat fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    cat fields/elex_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat /home/ubuntu/elex-loader/fields/elex_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
 if get_results; then
     drop_table
     load_results
     replace_views
-    rm -rf results.csv
+    rm -rf /tmp/results.csv
 else
     echo "ERROR: Bad response from AP. No results loaded."
-    rm -rf results.csv
+    rm -rf /tmp/results.csv
 fi
 
 echo "------------------------------"
