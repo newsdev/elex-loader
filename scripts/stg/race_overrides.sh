@@ -17,8 +17,8 @@ date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 echo "Create race overrides table"
-cat fields/race_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-cat fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+cat /home/ubuntu/elex-loader/fields/race_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
