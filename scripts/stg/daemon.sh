@@ -18,5 +18,5 @@ fi
 while [ 1 ]; do
     source /etc/environment && source /home/ubuntu/.virtualenvs/elex-loader/bin/activate && /bin/bash /home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
     export NODE_ENV="staging" && cd /home/ubuntu/election-2016/ && npm run post-update $RACEDATE
-    sleep 600
+    sleep 30
 done
