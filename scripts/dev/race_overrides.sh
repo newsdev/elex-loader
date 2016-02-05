@@ -8,6 +8,10 @@ if [[ -z $RACEDATE ]] ; then
     exit 1
 fi
 
+if [[ -z $OVERRIDE_DIR ]] ; then
+    OVERRIDE_DIR='overrides'
+fi
+
 if [[ -z "$AP_API_KEY" ]] ; then
     echo "Missing environmental variable AP_API_KEY. Try 'export AP_API_KEY=MY_API_KEY_GOES_HERE'."
     exit 1
@@ -21,7 +25,7 @@ cat fields/race_overrides.txt | psql elex_$RACEDATE
 cat fields/elex_races.txt | psql elex_$RACEDATE
 
 echo "Copy overrides file"
-cat overrides/override_races.csv | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
+cat $OVERRIDE_DIR/override_races.csv | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
