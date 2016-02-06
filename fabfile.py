@@ -63,6 +63,10 @@ def pull():
     api.run('cd /home/ubuntu/%(project_name)s; git fetch; git pull origin %(branch)s' % env)
 
 @api.task
+def upgrade_elex():
+    api.run('cd /home/ubuntu/%(project_name)s; workon %(project_name)s && pip install --upgrade elex' % env)
+
+@api.task
 def pip_install():
     api.run('cd /home/ubuntu/%(project_name)s; workon %(project_name)s && pip install -r requirements.txt' % env)
 
