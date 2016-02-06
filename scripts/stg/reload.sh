@@ -14,7 +14,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-./home/ubuntu/elex-loader/scripts/dev/init.sh $RACEDATE
-./home/ubuntu/elex-loader/scripts/dev/race_overrides.sh $RACEDATE
-./home/ubuntu/elex-loader/scripts/dev/candidate_overrides.sh $RACEDATE
-./home/ubuntu/elex-loader/scripts/dev/update.sh $RACEDATE
+./home/ubuntu/elex-loader/scripts/stg/init.sh $RACEDATE
+./home/ubuntu/elex-loader/scripts/stg/race_overrides.sh $RACEDATE
+./home/ubuntu/elex-loader/scripts/stg/candidate_overrides.sh $RACEDATE
+./home/ubuntu/elex-loader/scripts/stg/update.sh $RACEDATE
