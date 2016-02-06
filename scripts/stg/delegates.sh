@@ -21,7 +21,7 @@ echo "------------------------------"
 
 
 cat /home/ubuntu/elex-loader/fields/delgates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+elex delegates -t | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
 
 
 echo "------------------------------"

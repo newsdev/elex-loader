@@ -13,12 +13,19 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
+if [[ -z $OVERRIDE_DIR ]] ; then
+    OVERRIDE_DIR='home/ubuntu/elex-loader/overrides'
+fi
+
 date "+STARTED: %H:%M:%S"
 echo "------------------------------"
 
 echo "Create race overrides table"
-cat fields/race_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-cat fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+cat /home/ubuntu/elex-loader/fields/race_overrides.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+
+echo "Copy overrides file"
+cat $OVERRIDE_DIR/$RACEDATE'_override_races.csv' | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
