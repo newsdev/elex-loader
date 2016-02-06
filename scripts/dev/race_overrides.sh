@@ -25,7 +25,7 @@ cat fields/race_overrides.txt | psql elex_$RACEDATE
 cat fields/elex_races.txt | psql elex_$RACEDATE
 
 echo "Copy overrides file"
-cat $OVERRIDE_DIR/override_races.csv | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
+cat $OVERRIDE_DIR/$RACEDATE'_override_races.csv' | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"

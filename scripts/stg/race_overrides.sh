@@ -25,7 +25,7 @@ cat /home/ubuntu/elex-loader/fields/race_overrides.txt | psql -h $ELEX_DB_HOST -
 cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 
 echo "Copy overrides file"
-cat $OVERRIDE_DIR/override_races.csv | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
+cat $OVERRIDE_DIR/$RACEDATE'_override_races.csv' | psql elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
 
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"
