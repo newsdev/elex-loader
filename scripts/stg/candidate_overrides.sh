@@ -14,7 +14,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 if [[ -z $OVERRIDE_DIR ]] ; then
-    OVERRIDE_DIR='home/ubuntu/elex-loader/overrides'
+    OVERRIDE_DIR='/home/ubuntu/elex-loader/overrides'
 fi
 
 date "+STARTED: %H:%M:%S"
