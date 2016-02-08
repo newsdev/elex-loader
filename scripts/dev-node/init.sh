@@ -38,5 +38,9 @@ echo "Initialize ballot measures"
 cat node_modules/elex-loader/fields/ballot_measures.txt | psql elex_$RACEDATE
 elex ballot-measures $RACEDATE -t | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
+echo "Initialize delegates"
+cat node_modules/elex-loader/fields/delegates.txt | psql elex_$RACEDATE
+elex delegates | psql elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+
 echo "------------------------------"
 date "+ENDED: %H:%M:%S"

@@ -8,5 +8,8 @@ DROP TABLE IF EXISTS delegates CASCADE; CREATE TABLE delegates(
     party_need integer,
     party varchar,
     delegates_count integer,
-    id varchar
+    id varchar,
+    d1 integer,
+    d7 integer,
+    d30 integer
 );
