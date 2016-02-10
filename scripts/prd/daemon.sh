@@ -17,5 +17,5 @@ while true; do
     /home/ubuntu/elex-loader/scripts/prd/update.sh "$RACEDATE"
     /home/ubuntu/elex-loader/scripts/prd/delegates.sh "$RACEDATE"
     npm run post-update "$RACEDATE"
-    sleep 10
+    sleep 600
 done
