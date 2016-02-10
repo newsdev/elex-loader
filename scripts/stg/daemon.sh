@@ -11,7 +11,6 @@ fi
 
 source '/etc/environment'
 source '/home/ubuntu/.virtualenvs/elex-loader/bin/activate'
-export NODE_ENV='staging'
 cd '/home/ubuntu/election-2016/' || exit
 
 while true; do
