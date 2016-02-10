@@ -13,11 +13,5 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-date "+STARTED: %H:%M:%S"
-echo "------------------------------"
-
 cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
-
-echo "------------------------------"
-date "+ENDED: %H:%M:%S"
