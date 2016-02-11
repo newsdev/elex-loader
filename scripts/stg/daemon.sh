@@ -9,9 +9,9 @@ if [[ -z $RACEDATE ]] ; then
     exit 1
 fi
 
-source '/etc/environment'
-source '/home/ubuntu/.virtualenvs/elex-loader/bin/activate'
-cd '/home/ubuntu/election-2016/' || exit
+source /etc/environment
+source /home/ubuntu/.virtualenvs/elex-loader/bin/activate
+cd /home/ubuntu/election-2016/ || exit
 
 while true; do
     /home/ubuntu/elex-loader/scripts/stg/update.sh "$RACEDATE"
