@@ -13,13 +13,16 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
+echo "sudo service elex-admin-$RACEDATE stop"
 sudo service elex-admin-$RACEDATE stop
+sudo service election-2016 stop
+psql -h $ELEX_DB_HOST -U elexadmin -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='elex_2016-02-23';"
 
 echo "Drop elex_$1 if it exists"
 dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
 
 echo "Create elex_$RACEDATE"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elex elex_$RACEDATE
+psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE
 
 echo "Initialize races"
 cat /home/ubuntu/elex-loader/fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
@@ -41,4 +44,5 @@ echo "Initialize delegates"
 cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
 
-sudo service elex-admin-$RACEDATE stop
+sudo service elex-admin-$RACEDATE start
+sudo service election-2016 start
