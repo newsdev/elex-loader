@@ -16,6 +16,7 @@ fi
 echo "sudo service elex-admin-$RACEDATE stop"
 sudo service elex-admin-$RACEDATE stop
 sudo service election-2016 stop
+psql -h $ELEX_DB_HOST -U elexadmin -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='elex_2016-02-23';"
 
 echo "Drop elex_$1 if it exists"
 dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
