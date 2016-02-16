@@ -13,6 +13,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
+echo "sudo service elex-admin-$RACEDATE stop"
 sudo service elex-admin-$RACEDATE stop
 
 echo "Drop elex_$1 if it exists"
