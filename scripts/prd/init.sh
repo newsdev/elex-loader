@@ -13,6 +13,8 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
+sudo service elex-admin-$RACEDATE stop
+
 echo "Drop elex_$1 if it exists"
 dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
 
@@ -38,3 +40,5 @@ elex ballot-measures $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 echo "Initialize delegates"
 cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+
+sudo service elex-admin-$RACEDATE stop

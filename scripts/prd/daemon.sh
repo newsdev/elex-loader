@@ -9,13 +9,13 @@ if [[ -z $RACEDATE ]] ; then
     exit 1
 fi
 
-source /etc/environment
-source /home/ubuntu/.virtualenvs/elex-loader/bin/activate
-cd /home/ubuntu/election-2016/ || exit
+. /etc/environment
+. /home/ubuntu/.virtualenvs/elex-loader/bin/activate
+cd /home/ubuntu/election-2016/
 
 while true; do
-    /home/ubuntu/elex-loader/scripts/prd/update.sh "$RACEDATE"
-    /home/ubuntu/elex-loader/scripts/prd/delegates.sh "$RACEDATE"
+    /home/ubuntu/elex-loader/scripts/prd/update.sh $RACEDATE
+    /home/ubuntu/elex-loader/scripts/prd/delegates.sh $RACEDATE
     npm run post-update "$RACEDATE"
-    sleep 600
+    sleep 10
 done
