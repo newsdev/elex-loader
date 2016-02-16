@@ -15,6 +15,7 @@ fi
 
 echo "sudo service elex-admin-$RACEDATE stop"
 sudo service elex-admin-$RACEDATE stop
+sudo service election-2016 stop
 
 echo "Drop elex_$1 if it exists"
 dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
@@ -43,3 +44,4 @@ cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U ele
 elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
 
 sudo service elex-admin-$RACEDATE start
+sudo service election-2016 start
