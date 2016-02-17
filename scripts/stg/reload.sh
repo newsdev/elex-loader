@@ -19,4 +19,4 @@ fi
 ./scripts/stg/candidate_overrides.sh $RACEDATE
 ./scripts/stg/update.sh $RACEDATE
 
-source /home/ubuntu/.virtualenvs/elex-admin-$RACEDATE/bin/activate && python /home/ubuntu/elex-admin/elex_admin/initialize_candidates.py
+source /home/ubuntu/.virtualenvs/elex-admin-$RACEDATE/bin/activate && python /home/ubuntu/elex-admin/elex_admin/initialize_racedate.py
