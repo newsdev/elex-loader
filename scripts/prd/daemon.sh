@@ -11,11 +11,11 @@ fi
 
 . /etc/environment
 . /home/ubuntu/.virtualenvs/elex-loader/bin/activate
-cd /home/ubuntu/election-2016/
 
 while true; do
     /home/ubuntu/elex-loader/scripts/prd/update.sh $RACEDATE
     /home/ubuntu/elex-loader/scripts/prd/delegates.sh $RACEDATE
+    cd /home/ubuntu/election-2016/LATEST/
     npm run post-update "$RACEDATE"
     sleep 10
 done
