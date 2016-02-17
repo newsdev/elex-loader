@@ -22,7 +22,7 @@ echo "Drop elex_$1 if it exists"
 dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
 
 echo "Create elex_$RACEDATE"
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE && psql -h $ELEX_DB_HOST -U elexadmin -d postgres -c "create extension hstore;"
+psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE && psql -h $ELEX_DB_HOST -U elexadmin -d elex_$RACEDATE -c "create extension hstore;"
 
 echo "Initialize races"
 cat /home/ubuntu/elex-loader/fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
