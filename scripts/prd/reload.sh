@@ -18,3 +18,5 @@ fi
 ./scripts/prd/race_overrides.sh $RACEDATE
 ./scripts/prd/candidate_overrides.sh $RACEDATE
 ./scripts/prd/update.sh $RACEDATE
+
+workon elex-admin-$RACEDATE && python /home/ubuntu/elex-admin/elex_admin/initialize_candidates.py
