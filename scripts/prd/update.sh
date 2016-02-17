@@ -35,6 +35,7 @@ if get_results; then
     drop_table
     load_results
     replace_views
+    touch "/home/ubuntu/elex-admin/elex_admin/app.py"
     rm -rf /tmp/results.csv
 else
     echo 'ERROR: Bad response from AP. No results loaded.'
