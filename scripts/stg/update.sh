@@ -31,7 +31,7 @@ function get_district_results {
 
 function load_district_results {
     # load only header and district-level results
-    cat /tmp/district-results.csv | grep ',district,\|,level,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /tmp/district-results.csv | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function replace_views {
