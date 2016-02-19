@@ -25,19 +25,31 @@ function load_results {
     cat /tmp/results.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
+function get_district_results {
+    elex results $RACEDATE -t --results-level district > /tmp/district-results.csv
+}
+
+function load_district_results {
+    # load only header and district-level results
+    cat /tmp/district-results.csv | grep ',district,\|,level,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+}
+
 function replace_views {
     cat /home/ubuntu/elex-loader/fields/elex_races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
     cat /home/ubuntu/elex-loader/fields/elex_candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
     cat /home/ubuntu/elex-loader/fields/elex_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
-if get_results; then
+if get_results && get_district_results; then
     drop_table
     load_results
+    load_district_results
     replace_views
     touch "/home/ubuntu/elex-admin/elex_admin/app.py"
     rm -rf /tmp/results.csv
+    rm -rf /tmp/district-results.csv
 else
     echo 'ERROR: Bad response from AP. No results loaded.'
     rm -rf /tmp/results.csv
+    rm -rf /tmp/district-results.csv
 fi
