@@ -12,7 +12,7 @@ fi
 . /etc/environment
 . /home/ubuntu/.virtualenvs/elex-loader/bin/activate
 
-let w=12
+let w=15
 
 for (( i=1; i<100000; i+=1 )); do
 
