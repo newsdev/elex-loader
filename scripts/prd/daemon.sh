@@ -17,5 +17,5 @@ while true; do
     /home/ubuntu/elex-loader/scripts/prd/delegates.sh $RACEDATE
     cd /home/ubuntu/election-2016/LATEST/
     npm run post-update "$RACEDATE"
-    sleep 10
+    sleep 30
 done
