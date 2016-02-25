@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS ballot_positions CASCADE; CREATE TABLE ballot_positions(
     candidateid varchar,
     ballotorder integer,
     description varchar,
+    electiondate varchar,
     last varchar,
     polid varchar,
     polnum varchar,

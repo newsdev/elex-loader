@@ -1,2 +1,2 @@
 fabric==1.10.2
-elex
+elex==1.2.1b1

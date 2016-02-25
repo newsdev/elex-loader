@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
         ballotorder int,
         candidateid varchar,
         description varchar,
+        delegatecount int,
         electiondate varchar,
         fipscode char(5),
         first varchar,
