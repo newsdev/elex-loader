@@ -13,10 +13,8 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-let ELEX_RESULTS_FILE="/tmp/$RACEDATE_init.json"
-
 function get_results {
-    curl -o "$ELEX_RESULTS_FILE" "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
+    curl -o /tmp/init_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
 }
 
 function stop_services {
@@ -35,16 +33,16 @@ psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || c
 
 function initialize_data {
     cat /home/ubuntu/elex-loader/fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    elex races $RACEDATE -t -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+    elex races $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
     cat /home/ubuntu/elex-loader/fields/reporting_units.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    elex reporting-units $RACEDATE -t -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
+    elex reporting-units $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
     cat /home/ubuntu/elex-loader/fields/candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    elex candidates $RACEDATE -t -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+    elex candidates $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
     cat /home/ubuntu/elex-loader/fields/ballot_measures.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    elex ballot-measures $RACEDATE -t -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+    elex ballot-measures $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
     cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
     elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
@@ -56,7 +54,7 @@ function start_services {
 }
 
 function clean_up {
-    rm -rf "$ELEX_RESULTS_FILE"
+    rm -rf /tmp/init_$RACEDATE.json
 }
 
 if get_results; then
