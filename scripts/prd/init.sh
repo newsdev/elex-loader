@@ -13,36 +13,61 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-echo "sudo service elex-admin-$RACEDATE stop"
-sudo service elex-admin-$RACEDATE stop
-sudo service election-2016 stop
-psql -h $ELEX_DB_HOST -U elexadmin -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='elex_2016-02-23';"
+let ELEX_RESULTS_FILE = "/tmp/$RACEDATE_init.json"
 
-echo "Drop elex_$1 if it exists"
-dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
+function get_results {
+    curl -o "$ELEX_RESULTS_FILE" "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
+}
 
-echo "Create elex_$RACEDATE"
+function stop_services {
+    sudo service elex-admin-$RACEDATE stop
+    sudo service election-2016 stop
+    psql -h $ELEX_DB_HOST -U elexadmin -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='elex_2016-02-23';"
+}
+
+function drop_database {
+    dropdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE --if-exists
+}
+
+function create_database {
 psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE && psql -h $ELEX_DB_HOST -U elexadmin -d elex_$RACEDATE -c "create extension hstore;"
+}
 
-echo "Initialize races"
-cat /home/ubuntu/elex-loader/fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex races $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+function initialize_data {
+    cat /home/ubuntu/elex-loader/fields/races.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    elex races $RACEDATE -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize reporting units"
-cat /home/ubuntu/elex-loader/fields/reporting_units.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex reporting-units $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /home/ubuntu/elex-loader/fields/reporting_units.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    elex reporting-units $RACEDATE -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize candidates"
-cat /home/ubuntu/elex-loader/fields/candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex candidates $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /home/ubuntu/elex-loader/fields/candidates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    elex candidates $RACEDATE -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize ballot measures"
-cat /home/ubuntu/elex-loader/fields/ballot_measures.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex ballot-measures $RACEDATE | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /home/ubuntu/elex-loader/fields/ballot_measures.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    elex ballot-measures $RACEDATE -d "$ELEX_RESULTS_FILE" | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize delegates"
-cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /home/ubuntu/elex-loader/fields/delegates.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    elex delegates | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+}
 
-sudo service elex-admin-$RACEDATE start
-sudo service election-2016 start
+function start_services {
+    sudo service elex-admin-$RACEDATE start
+    sudo service election-2016 start
+}
+
+function clean_up {
+    rm -rf "$ELEX_RESULTS_FILE"
+}
+
+if get_results; then
+    stop_services
+    drop_database
+    create_database
+    initialize_data
+    start_services
+    touch "/home/ubuntu/elex-admin/elex_admin/app.py"
+else
+    echo "ERROR: Bad response from AP. Did not initialize $RACEDATE."
+fi
+
+clean_up
