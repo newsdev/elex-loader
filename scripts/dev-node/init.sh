@@ -13,34 +13,48 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-date "+STARTED: %H:%M:%S"
-echo "------------------------------"
+function get_results {
+    curl -o /tmp/init_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru&test=true"
+}
 
-echo "Drop elex_$1 if it exists"
-dropdb elex_$RACEDATE --if-exists
+function drop_database {
+    dropdb elex_$RACEDATE --if-exists
+}
 
-echo "Create elex_$RACEDATE"
-psql -l | grep -q elex_$RACEDATE || createdb elex_$RACEDATE
+function create_database {
+psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE && psql -h $ELEX_DB_HOST -U elexadmin -d elex_$RACEDATE -c "create extension hstore;"
+}
 
-echo "Initialize races"
-cat node_modules/elex-loader/fields/races.txt | psql elex_$RACEDATE
-elex races $RACEDATE -t | psql elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
+function initialize_data {
 
-echo "Initialize reporting units"
-cat node_modules/elex-loader/fields/reporting_units.txt | psql elex_$RACEDATE
-elex reporting-units $RACEDATE -t | psql elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
+    cat node_modules/elex-loader/fields/races.txt | psql elex_$RACEDATE
+    elex races $RACEDATE -d /tmp/init_$RACEDATE.json | psql elex_$RACEDATE -c "COPY races FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize candidates"
-cat node_modules/elex-loader/fields/candidates.txt | psql elex_$RACEDATE
-elex candidates $RACEDATE -t | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+    cat node_modules/elex-loader/fields/reporting_units.txt | psql elex_$RACEDATE
+    elex reporting-units $RACEDATE -d /tmp/init_$RACEDATE.json | psql elex_$RACEDATE -c "COPY reporting_units FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize ballot measures"
-cat node_modules/elex-loader/fields/ballot_measures.txt | psql elex_$RACEDATE
-elex ballot-measures $RACEDATE -t | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+    cat node_modules/elex-loader/fields/candidates.txt | psql elex_$RACEDATE
+    elex candidates $RACEDATE -d /tmp/init_$RACEDATE.json | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "Initialize delegates"
-cat node_modules/elex-loader/fields/delegates.txt | psql elex_$RACEDATE
-elex delegates | psql elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+    cat node_modules/elex-loader/fields/ballot_measures.txt | psql elex_$RACEDATE
+    elex ballot-measures $RACEDATE -d /tmp/init_$RACEDATE.json | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
-echo "------------------------------"
-date "+ENDED: %H:%M:%S"
+    cat node_modules/elex-loader/fields/delegates.txt | psql elex_$RACEDATE
+    elex delegates | psql elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
+
+}
+
+
+function clean_up {
+    rm -rf /tmp/init_$RACEDATE.json
+}
+
+if get_results; then
+    drop_database
+    create_database
+    initialize_data
+else
+    echo "ERROR: Bad response from AP. Did not initialize $RACEDATE."
+fi
+
+clean_up
