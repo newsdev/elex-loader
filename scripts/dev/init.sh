@@ -22,7 +22,7 @@ function drop_database {
 }
 
 function create_database {
-psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -l | grep -q elex_$RACEDATE || createdb -h $ELEX_DB_HOST -U elexadmin elex_$RACEDATE && psql -h $ELEX_DB_HOST -U elexadmin -d elex_$RACEDATE -c "create extension hstore;"
+    createdb elex_$RACEDATE && psql -d elex_$RACEDATE -c "create extension hstore;"
 }
 
 function initialize_data {
