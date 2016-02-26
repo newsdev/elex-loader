@@ -14,7 +14,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
 fi
 
 function get_results {
-    curl -o /tmp/init_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru&test=true"
+    curl -o /tmp/init_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru&test=true&setzerocounts=true"
 }
 
 function drop_database {
