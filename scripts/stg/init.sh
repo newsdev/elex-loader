@@ -13,7 +13,7 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-let ELEX_RESULTS_FILE = "/tmp/$RACEDATE_init.json"
+let ELEX_RESULTS_FILE="/tmp/$RACEDATE_init.json"
 
 function get_results {
     curl -o "$ELEX_RESULTS_FILE" "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
