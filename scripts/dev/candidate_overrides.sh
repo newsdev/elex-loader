@@ -17,15 +17,6 @@ if [[ -z $OVERRIDE_DIR ]] ; then
     OVERRIDE_DIR='overrides'
 fi
 
-date "+STARTED: %H:%M:%S"
-echo "------------------------------"
-
-echo "Create candidate overrides table"
 cat fields/candidate_overrides.txt | psql elex_$RACEDATE
 cat fields/elex_candidates.txt | psql elex_$RACEDATE
-
-echo "Copy overrides file"
 cat $OVERRIDE_DIR/$RACEDATE'_override_candidates.csv' | psql elex_$RACEDATE -c "COPY override_candidates FROM stdin DELIMITER ',' CSV HEADER;"
-
-echo "------------------------------"
-date "+ENDED: %H:%M:%S"

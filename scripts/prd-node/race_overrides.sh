@@ -13,12 +13,6 @@ if [[ -z "$AP_API_KEY" ]] ; then
     exit 1
 fi
 
-date "+STARTED: %H:%M:%S"
-echo "------------------------------"
-
-echo "Create race overrides table"
 cat node_modules/elex-loader/fields/race_overrides.txt | psql elex_$RACEDATE
 cat node_modules/elex-loader/fields/elex_races.txt | psql elex_$RACEDATE
-
-echo "------------------------------"
-date "+ENDED: %H:%M:%S"
+cat $OVERRIDE_DIR/$RACEDATE'_override_races.csv' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY override_races FROM stdin DELIMITER ',' CSV HEADER;"
