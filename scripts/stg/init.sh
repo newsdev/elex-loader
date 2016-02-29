@@ -43,6 +43,9 @@ function initialize_data {
     cat /home/ubuntu/elex-loader/fields/ballot_measures.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
     elex ballot-measures $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 
+    ./scripts/stg/race_overrides.sh $RACEDATE
+    ./scripts/stg/candidate_overrides.sh $RACEDATE
+
     cat /home/ubuntu/elex-loader/fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
     elex results $RACEDATE -t -d /tmp/init_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 
