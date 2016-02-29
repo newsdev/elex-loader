@@ -17,6 +17,5 @@ fi
 ./scripts/stg/init.sh $RACEDATE
 ./scripts/stg/race_overrides.sh $RACEDATE
 ./scripts/stg/candidate_overrides.sh $RACEDATE
-./scripts/stg/update.sh $RACEDATE
 
 source /home/ubuntu/.virtualenvs/elex-admin/bin/activate && export RACEDATE=$RACEDATE && python /home/ubuntu/elex-admin/elex_admin/initialize_racedate.py

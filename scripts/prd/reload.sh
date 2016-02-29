@@ -17,6 +17,5 @@ fi
 ./scripts/prd/init.sh $RACEDATE
 ./scripts/prd/race_overrides.sh $RACEDATE
 ./scripts/prd/candidate_overrides.sh $RACEDATE
-./scripts/prd/update.sh $RACEDATE
 
 source /home/ubuntu/.virtualenvs/elex-admin/bin/activate && export RACEDATE=$RACEDATE && python /home/ubuntu/elex-admin/elex_admin/initialize_racedate.py
