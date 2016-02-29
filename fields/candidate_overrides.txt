@@ -6,5 +6,5 @@ DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidat
     nyt_races integer[],
     nyt_display_order integer,
     nyt_winner bool,
-    nyt_delegates integer
+    nyt_delegates numeric
 );
