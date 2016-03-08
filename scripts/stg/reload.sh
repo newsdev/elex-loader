@@ -1,12 +1,13 @@
 #!/bin/bash
 
-. scripts/prd/_delegates.sh
-. scripts/prd/_districts.sh
-. scripts/prd/_init.sh
-. scripts/prd/_overrides.sh
-. scripts/prd/_post.sh
-. scripts/prd/_pre.sh
-. scripts/prd/_views.sh
+. scripts/stg/_admin.sh
+. scripts/stg/_delegates.sh
+. scripts/stg/_districts.sh
+. scripts/stg/_init.sh
+. scripts/stg/_overrides.sh
+. scripts/stg/_post.sh
+. scripts/stg/_pre.sh
+. scripts/stg/_views.sh
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
@@ -22,4 +23,5 @@ init
 districts
 delegates
 views
+admin
 post
