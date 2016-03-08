@@ -27,7 +27,7 @@ for (( i=1; i<100000; i+=1 )); do
         districts 
     fi
     results
-    node_post_update
+    views
     post
 
     sleep $wait_time
