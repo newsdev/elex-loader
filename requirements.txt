@@ -1,2 +1,2 @@
 fabric==1.10.2
--e git+git@github.com:newsdev/elex.git@235-feature#egg=elex
+-e git+git@github.com:newsdev/elex.git#egg=elex
