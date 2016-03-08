@@ -22,4 +22,5 @@ init
 districts
 delegates
 views
+admin
 post
