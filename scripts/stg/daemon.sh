@@ -23,11 +23,11 @@ for (( i=1; i<100000; i+=1 )); do
     let districts_interval=i%3
 
     pre
-    if [ "$delegates_interval" -eq 0 ];
-        then delegates
+    if [ "$delegates_interval" -eq 0 ]; then 
+        delegates
     fi
-    if [ "$districts_interval" -eq 0 ];
-        then districts 
+    if [ "$districts_interval" -eq 0 ]; then
+        districts 
     fi
     results
     node_post_update
