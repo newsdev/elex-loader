@@ -1,30 +1,32 @@
 #!/bin/bash
 
-if [[ ! -z $1 ]] ; then
-    RACEDATE=$1
-fi
-
-if [[ -z $RACEDATE ]] ; then
-    echo 'Provide a race date, such as 2016-02-01'
-    exit 1
-fi
+. /home/ubuntu/elex-loader/scripts/prd/_delegates.sh
+. /home/ubuntu/elex-loader/scripts/prd/_districts.sh
+. /home/ubuntu/elex-loader/scripts/prd/_node_post_update.sh
+. /home/ubuntu/elex-loader/scripts/prd/_overrides.sh
+. /home/ubuntu/elex-loader/scripts/prd/_post.sh
+. /home/ubuntu/elex-loader/scripts/prd/_pre.sh
+. /home/ubuntu/elex-loader/scripts/prd/_results.sh
+. /home/ubuntu/elex-loader/scripts/prd/_views.sh
 
 . /etc/environment
-. /home/ubuntu/.virtualenvs/elex-loader/bin/activate
 
-let w=15
+if [[ ! -z $1 ]] ; then 
+    RACEDATE=$1 
+fi
 
-for (( i=1; i<100000; i+=1 )); do
+let wait_time=15
 
-    let v=i%6
+for (( iteration=1; iteration<100000; iteration+=1 )); do
+    let delgates_interval=iteration%4
+    let districts_interval=iteration%3
 
-    if [ "$v" -eq 0 ]; then
-        /home/ubuntu/elex-loader/scripts/prd/delegates.sh $RACEDATE
-    fi
+    pre
+    if [ "$delgates_interval" -eq 0 ]; then delegates fi
+    if [ "$districts_interval" -eq 0 ]; then districts fi
+    results
+    node_post_update
+    post
 
-    /home/ubuntu/elex-loader/scripts/prd/update.sh $RACEDATE
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
-
-    sleep $w
-
+    sleep $wait_time
 done

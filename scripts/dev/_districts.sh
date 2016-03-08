@@ -1,0 +1,15 @@
+function get_districts {
+    elex results $RACEDATE -t --results-level district > /tmp/districts_$RACEDATE.csv
+}
+
+function load_districts {
+    cat /tmp/districts_$RACEDATE.csv | grep 'Z,district,\|,lastupdated,level,national,' | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+}
+
+function districts {
+    if get_districts; then
+        load_districts
+    else
+        echo "ERROR | DISTRICTS | Bad response. Did not load $RACEDATE."
+    fi
+}

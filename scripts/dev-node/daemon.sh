@@ -1,21 +1,29 @@
 #!/bin/bash
 
-# set RACEDATE from the first argument, if it exists
-if [[ ! -z $1 ]] ; then
-    RACEDATE=$1
+. node_modules/elex-loader/scripts/dev-node/_delegates.sh
+. node_modules/elex-loader/scripts/dev-node/_districts.sh
+. node_modules/elex-loader/scripts/dev-node/_overrides.sh
+. node_modules/elex-loader/scripts/dev-node/_post.sh
+. node_modules/elex-loader/scripts/dev-node/_pre.sh
+. node_modules/elex-loader/scripts/dev-node/_results.sh
+. node_modules/elex-loader/scripts/dev-node/_views.sh
+
+let wait_time=30
+
+if [[ ! -z $1 ]] ; then 
+    RACEDATE=$1 
 fi
 
-if [[ -z $RACEDATE ]] ; then
-    echo 'Provide a race date, such as 2016-02-01'
-    exit 1
-fi
+pre
 
-if [[ -z "$AP_API_KEY" ]] ; then
-    echo "Missing environmental variable AP_API_KEY. Try 'export AP_API_KEY=MY_API_KEY_GOES_HERE'."
-    exit 1
-fi
+for (( iteration=1; iteration<100000; iteration+=1 )); do
+    let delgates_interval=iteration%4
+    let districts_interval=iteration%3
 
-while [ 1 ]; do
-    ./scripts/dev-node/update.sh $RACEDATE
-    sleep 30
+    if [ "$delgates_interval" -eq 0 ]; then delegates fi
+    if [ "$districts_interval" -eq 0 ]; then districts fi
+    results
+    post
+
+    sleep $wait_time
 done
