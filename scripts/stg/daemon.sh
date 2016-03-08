@@ -17,9 +17,10 @@ fi
 
 let wait_time=30
 
-for (( iteration=1; iteration<100000; iteration+=1 )); do
-    let delegates_interval=iteration%4
-    let districts_interval=iteration%3
+for (( i=1; i<100000; i+=1 )); do
+
+    let delegates_interval=i%4
+    let districts_interval=i%3
 
     pre
     if [ "$delegates_interval" -eq 0 ]; then delegates fi
@@ -29,4 +30,5 @@ for (( iteration=1; iteration<100000; iteration+=1 )); do
     post
 
     sleep $wait_time
+
 done
