@@ -15,7 +15,7 @@ if [[ ! -z $1 ]] ; then
     RACEDATE=$1 
 fi
 
-let wait_time=30
+let wait_time=15
 
 for (( i=1; i<100000; i+=1 )); do
 
