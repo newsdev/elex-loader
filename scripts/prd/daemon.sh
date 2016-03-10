@@ -15,9 +15,19 @@ if [[ ! -z $1 ]] ; then
     RACEDATE=$1 
 fi
 
-let wait_time=15
+if [ -f /tmp/elex_loader_timeout.sh ]; then
+    . /tmp/elex_loader_timeout.sh
+fi
+
+if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
+    ELEX_LOADER_TIMEOUT=30
+fi
 
 for (( i=1; i<100000; i+=1 )); do
+
+    if [ -f /tmp/elex_loader_timeout.sh ]; then
+        . /tmp/elex_loader_timeout.sh
+    fi
 
     let delegates_interval=i%4
     let districts_interval=i%3
@@ -27,13 +37,12 @@ for (( i=1; i<100000; i+=1 )); do
     if [ "$delegates_interval" -eq 0 ]; then 
         delegates
     fi
-    if [ "$districts_interval" -eq 0 ]; then
+    if [ "$districts_interval" -eq 0 ]; then 
         districts 
     fi
     views
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     post
 
-    sleep $wait_time
+    sleep $ELEX_LOADER_TIMEOUT
 
 done
