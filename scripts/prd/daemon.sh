@@ -20,7 +20,7 @@ if [ -f /tmp/elex_loader_timeout.sh ]; then
 fi
 
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
-    ELEX_LOADER_TIMEOUT=30
+    ELEX_LOADER_TIMEOUT=15
 fi
 
 for (( i=1; i<100000; i+=1 )); do
