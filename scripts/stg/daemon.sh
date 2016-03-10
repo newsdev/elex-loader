@@ -41,6 +41,7 @@ for (( i=1; i<100000; i+=1 )); do
         districts 
     fi
     views
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     post
 
     sleep $ELEX_LOADER_TIMEOUT
