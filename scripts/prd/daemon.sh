@@ -29,7 +29,7 @@ for (( i=1; i<100000; i+=1 )); do
         . /tmp/elex_loader_timeout.sh
     fi
 
-    echo $ELEX_LOADER_TIMEOUT
+    echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
     let delegates_interval=i%4
     let districts_interval=i%3
