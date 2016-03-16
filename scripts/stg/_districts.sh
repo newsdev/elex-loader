@@ -1,5 +1,5 @@
 function get_districts {
-    elex results $RACEDATE -t --results-level district > /tmp/districts_$RACEDATE.csv
+    elex results $RACEDATE --results-level district > /tmp/districts_$RACEDATE.csv
 }
 
 function load_districts {
