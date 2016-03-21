@@ -20,7 +20,7 @@ fi
 pre
 overrides
 init
-#districts
+districts
 delegates
 views
 admin
