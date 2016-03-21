@@ -8,7 +8,7 @@ function load_results {
 }
 
 function results {
-    timestamp=$(date +"%T")
+    timestamp=$(date +"%s")
     if get_results; then
         load_results
         cp /tmp/results_$RACEDATE.json /tmp/$RACEDATE/ap_elections_loader_recording-$timestamp.json
