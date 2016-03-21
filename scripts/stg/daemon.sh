@@ -2,7 +2,6 @@
 
 . /home/ubuntu/elex-loader/scripts/stg/_delegates.sh
 . /home/ubuntu/elex-loader/scripts/stg/_districts.sh
-. /home/ubuntu/elex-loader/scripts/stg/_node_post_update.sh
 . /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
