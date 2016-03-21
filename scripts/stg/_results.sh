@@ -8,8 +8,10 @@ function load_results {
 }
 
 function results {
+    timestamp=$(date +"%T")
     if get_results; then
         load_results
+        cp /tmp/results_$RACEDATE.json /tmp/$RACEDATE/ap_elections_loader_recording-$timestamp.json
     else
         echo "ERROR | RESULTS | Bad response. Did not load $RACEDATE."
     fi
