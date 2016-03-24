@@ -14,6 +14,9 @@ Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 
 
 ## Getting started
 ```
+mkvirtualenv elex-loader
+git clone git@github.com:newsdev/elex-loader.git && cd elex-loader
+pip install -r requirements.txt
 ./scripts/$ENV/bootstrap.sh
 ```
 
