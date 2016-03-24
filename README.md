@@ -13,66 +13,52 @@ See "Chapter 2: Install Virtualenv" of NPR's [development environment blog post]
 Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 10.11 El Capitan](http://stackoverflow.com/questions/32086631/cant-install-virtualenvwrapper-on-osx-10-11-el-capitan).
 
 ## Getting started
+```
+./scripts/dev/update.sh
+```
 
-#### 1. Postgres
+
+## Environments
+
+The New York Times defines a handful of different environments; principally, `dev`, `stg` and `prd`.
+
+* `dev`: Hits test URLs by default. Assumes a local Postgres database where the local user is a superuser.
+* `stg`: Hits test URLs by default. Requires a Postgres user / host / password to be defined in the environment. We use a `.pgpass` file and export the rest in `/etc/environment`. Check out [elex-dotfiles](https://github.com/newsdev/elex-dotfiles) for more.
+* `prd`: Hits live URLs by default. Requires a Postgres user / host / password to be defined in the environment.
+
+## Use cases
+
+### Load initial data
 ```bash
-brew install postgres
-./createuser.sh       # create the elex role as a superuser
+./scripts/$ENV/reload.sh
 ```
 
-#### 2. Loader scripts
+The AP will make "live zeros" available in the morning of an election day. You can run `reload.sh` to get an entire new set of data, including races, reporting units, candidates and zeroed-out results.
+
+### Load results on election night
 ```bash
-git clone https://github.com/newsdev/elex-loader && cd elex-loader
-mkvirtualenv elex-loader
-pip install -r requirements.txt
+./scripts/$ENV/daemon.sh
 ```
 
-#### 3. Export environment variables
-Edit `~/.virtualenvs/elex-loader/bin/postactivate` and add this line:
+The daemon will run 100,000 times (seriously) unless it is stopped. We control ours with https://github.com/newsdev/supervisor and a custom `/etc/supervisord.conf`. This configuration file is available in [elex-dotfiles](https://github.com/newsdev/elex-dotfiles) along with other secrets.
 
-```bash
-export AP_API_KEY=<MY_AP_API_KEY>
-export RACEDATE=YYYY-MM-DD
-```
-
-The `RACEDATE` environment variable determines which database the loader will be loading data into. The formula for the database name is `elex_$RACEDATE`.
-
-Then do this:
-
-```bash
-source ~/.virtualenvs/elex-loader/bin/postactivate
-```
-
-## Run the loader
-
-#### 0. Configuration
-* Edit [candidate.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/candidate.csv) and/or [race.csv](https://github.com/newsdev/elex-loader/blob/master/overrides/race.csv) if you'd like to override race descriptions and/or candidates or ballot positions with different names or descriptions.
-
-#### 1. Initial data
-* Loads initial data about the race, candidates, ballot issues and reporting units.
-
-* **Note**: Creates database and tables for this date if they don't exist.
-```bash
-./init.sh
-```
-
-For this or other shell commands, you can set the race date manually, instead of using the environmental variable (in case you need to load data for multiple dates):
-
-```
-./init.sh 2016-02-01
-```
-
-#### 2a. Updates
-* Loads candidate reporting unit objects into the database.
-
-* **Note**: You might want to run this in a loop or on a cron.
+#### Set a wait interval
+You might want to control how long the daemon waits between cycles. This is hardcoded to a default -- 15s in production, 30s elsewhere. You can create the file `/tmp/elex_loader_timeout.sh` and export an `ELEX_LOADER_TIMEOUT` variable like this:
 
 ```bash
-./update.sh
+export ELEX_LOADER_TIMEOUT=60
 ```
 
-#### 3b. Daemonized
-The daemon runs `update.sh` every 30 seconds.
+The daemon checks for this file and sources it if it exists in every loop, which means you can dynamically control the wait time. For example, we do this in [our admin](https://github.com/newsdev/elex-admin/blob/master/elex_admin/app.py#L294).
+
+### Load results once
 ```bash
-./daemon.sh
+./scripts/$ENV/update.sh
+```
+
+Sometimes you just need to load a single 
+
+### Load delegate data
+```bash
+./scripts/$ENV/delegates.sh
 ```
