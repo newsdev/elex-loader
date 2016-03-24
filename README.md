@@ -14,9 +14,10 @@ Having trouble on OS X El Capitan? See: [Can't install virtualenvwrapper on OSX 
 
 ## Getting started
 ```
-./scripts/dev/update.sh
+./scripts/$ENV/bootstrap.sh
 ```
 
+The `bootstrap.sh` script will create databases and the user necessary for local development. Note: This does not exist for non-development environments. Please use commands in [elex-dotfiles](https://github.com/newsdev/elex-dotfiles) instead.
 
 ## Environments
 
