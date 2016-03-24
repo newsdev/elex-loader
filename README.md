@@ -41,7 +41,7 @@ The AP will make "live zeros" available in the morning of an election day. You c
 ./scripts/$ENV/daemon.sh
 ```
 
-The daemon will run 100,000 times (seriously) unless it is stopped. We control ours with https://github.com/newsdev/supervisor and a custom `/etc/supervisord.conf`. This configuration file is available in [elex-dotfiles](https://github.com/newsdev/elex-dotfiles) along with other secrets.
+The daemon will run 100,000 times (seriously) unless it is stopped. We control ours with [a custom Supervisord instance](https://github.com/newsdev/supervisor) and a modified `/etc/supervisord.conf`. This configuration file is available in [elex-dotfiles](https://github.com/newsdev/elex-dotfiles) along with other secrets.
 
 #### Set a wait interval
 You might want to control how long the daemon waits between cycles. This is hardcoded to a default -- 15s in production, 30s elsewhere. You can create the file `/tmp/elex_loader_timeout.sh` and export an `ELEX_LOADER_TIMEOUT` variable like this:
