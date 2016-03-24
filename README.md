@@ -57,9 +57,11 @@ The daemon checks for this file and sources it if it exists in every loop, which
 ./scripts/$ENV/update.sh
 ```
 
-Sometimes you just need to load a single 
+Sometimes you just need to load a single update, e.g., to grab final results after we've turned off the loader. This command will get new results without baking or reloading any other parts of the database.
 
 ### Load delegate data
 ```bash
 ./scripts/$ENV/delegates.sh
 ```
+
+Often, the AP will update delegate information after our daemon has stopped running. To update just delegates for a given racedate, run this command.
