@@ -6,11 +6,14 @@ from fabric import api, operations, contrib
 from fabric.state import env
 
 ENVIRONMENTS = {
+    "west": {
+        "hosts": 'ec2-50-18-105-1.us-west-1.compute.amazonaws.com',
+    },
     "prd": {
-        "hosts": [os.environ.get('ELEX_LOADER_PRD_HOST', None)],
+        "hosts": 'ec2-23-23-220-64.compute-1.amazonaws.com',
     }, 
     "stg": {
-        "hosts": [os.environ.get('ELEX_LOADER_STG_HOST', None)]
+        "hosts": 'ec2-107-20-172-193.compute-1.amazonaws.com',
     }
 }
 
