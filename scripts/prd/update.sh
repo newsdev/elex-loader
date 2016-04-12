@@ -12,6 +12,6 @@ fi
 
 pre
 results
-#districts
+districts
 views
 post
