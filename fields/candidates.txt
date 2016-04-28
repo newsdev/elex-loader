@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     id varchar,
-    unique_id varchar,
     candidateid varchar,
     ballotorder integer,
     first varchar,

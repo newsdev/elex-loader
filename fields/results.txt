@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
         id varchar,
-        unique_id varchar,
         raceid varchar,
         racetype varchar,
         racetypeid varchar,
