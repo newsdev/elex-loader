@@ -30,7 +30,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
-    let delegates_interval=i%5
+    let delegates_interval=i%2
     let districts_interval=i%1
 
     pre
