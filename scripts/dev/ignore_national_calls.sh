@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. scripts/dev/_racecalls.sh
+
+if [[ ! -z $1 ]] ; then 
+    RACEDATE=$1 
+fi
+
+ignore_national_ap_calls
