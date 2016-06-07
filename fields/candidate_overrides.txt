@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidat
     nyt_candidate_name varchar,
     nyt_candidate_important bool,
     nyt_candidate_description text,
-    nyt_races integer[],
+    nyt_races varchar[],
     nyt_display_order integer,
     nyt_winner bool,
     nyt_delegates numeric
