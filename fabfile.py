@@ -10,7 +10,7 @@ ENVIRONMENTS = {
         "hosts": 'ec2-50-18-105-1.us-west-1.compute.amazonaws.com',
     },
     "prd": {
-        "hosts": 'ec2-23-23-220-64.compute-1.amazonaws.com',
+        "hosts": 'ec2-54-227-242-85.compute-1.amazonaws.com',
     }, 
     "stg": {
         "hosts": 'ec2-107-20-172-193.compute-1.amazonaws.com',
