@@ -8,7 +8,7 @@ CREATE OR REPLACE VIEW elex_results as
            r.*
            FROM results as r
                LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
-               LEFT JOIN override_races as o on r.raceid = o.race_raceid
+               LEFT JOIN override_races as o on r.raceid = o.race_raceid and r.statepostal = o.race_statepostal
                LEFT JOIN delegates as d on r.statepostal = d.state AND r.polid = d.candidateid
                LEFT JOIN delegates as n on r.polid = n.candidateid AND n.state = 'US'
 ;
