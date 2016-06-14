@@ -1,5 +1,5 @@
 function get_results {
-    curl -o /tmp/results_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
+    curl -o /tmp/results_$RACEDATE.json -D /tmp/last_headers.txt "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
 }
 
 function load_results {
