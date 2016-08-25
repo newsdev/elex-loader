@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(dirname $BASH_SOURCE)
+
 function create_databases {
     while read racedate; do
         if psql -lqt | cut -d \| -f 1 | grep -qw elex_$racedate; then
@@ -8,7 +10,7 @@ function create_databases {
             createdb elex_$racedate
             echo "created elex_$racedate"
         fi
-    done <node_modules/elex-loader/racedates.txt
+    done <$SCRIPT_DIR'/../../racedates.txt'
 }
 
 function create_user {
