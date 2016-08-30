@@ -1,5 +1,5 @@
 function get_results {
-    curl -o /tmp/results_$RACEDATE.json -D /tmp/last_headers.txt "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
+    curl -o --compressed /tmp/results_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
 }
 
 function load_results {
@@ -8,8 +8,10 @@ function load_results {
 }
 
 function results {
+    timestamp=$(date +"%s")
     if get_results; then
         load_results
+        cp /tmp/results_$RACEDATE.json /tmp/$RACEDATE/ap_elections_loader_recording-$timestamp.json
     else
         echo "ERROR | RESULTS | Bad response. Did not load $RACEDATE."
     fi
