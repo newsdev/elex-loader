@@ -1,15 +1,24 @@
 #!/bin/bash
 
-. node_modules/elex-loader/scripts/dev-node/_delegates.sh
-. node_modules/elex-loader/scripts/dev-node/_districts.sh
-. node_modules/elex-loader/scripts/dev-node/_overrides.sh
-. node_modules/elex-loader/scripts/dev-node/_post.sh
-. node_modules/elex-loader/scripts/dev-node/_pre.sh
-. node_modules/elex-loader/scripts/dev-node/_results.sh
-. node_modules/elex-loader/scripts/dev-node/_views.sh
+# Get script location, so scripts work from this repo
+# and when installed into Node modules
+SCRIPT_DIR=$(dirname $BASH_SOURCE)
 
-if [[ ! -z $1 ]] ; then 
-    RACEDATE=$1 
+. $SCRIPT_DIR'/_delegates.sh'
+. $SCRIPT_DIR'/_districts.sh'
+. $SCRIPT_DIR'/_overrides.sh'
+. $SCRIPT_DIR'/_post.sh'
+. $SCRIPT_DIR'/_pre.sh'
+. $SCRIPT_DIR'/_results.sh'
+. $SCRIPT_DIR'/_views.sh'
+
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
+fi
+
+AP_TEST_ARG=''
+if [[ "$AP_TEST" = "true" ]] ; then
+    AP_TEST_ARG='&test=true'
 fi
 
 if [ -f /tmp/elex_loader_timeout.sh ]; then

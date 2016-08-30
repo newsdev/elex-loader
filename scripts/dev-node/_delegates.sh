@@ -3,7 +3,7 @@ function get_delegates {
 }
 
 function load_delegates {
-    cat node_modules/elex-loader/fields/delegates.txt | psql elex_$RACEDATE
+    cat $SCRIPT_DIR'/../../fields/delegates.txt' | psql elex_$RACEDATE
     cat /tmp/dels_$RACEDATE.csv | psql elex_$RACEDATE -c "COPY delegates FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
