@@ -1,14 +1,9 @@
 CREATE OR REPLACE VIEW elex_results as
-       SELECT n.delegates_count as us_delegates_count,
-           n.superdelegates_count as us_superdelegates_count,
-           d.delegates_count,
-           d.superdelegates_count,
-           o.*,
-           c.*,
-           r.*
-           FROM results as r
-               LEFT JOIN override_candidates as c on r.candidateid = c.candidate_candidateid
-               LEFT JOIN override_races as o on r.raceid = o.race_raceid and r.statepostal = o.race_statepostal
-               LEFT JOIN delegates as d on r.statepostal = d.state AND r.polid = d.candidateid
-               LEFT JOIN delegates as n on r.polid = n.candidateid AND n.state = 'US'
+       (SELECT x.*, y.*, z.* FROM local_results as z
+                LEFT JOIN override_candidates as y on z.candidateid = y.candidate_candidateid
+                LEFT JOIN override_races as x on z.raceid = x.race_raceid and z.statepostal = x.race_statepostal)
+        UNION ALL
+        (SELECT a.*, b.*, c.* FROM national_results as c
+                LEFT JOIN override_candidates as b on c.candidateid = b.candidate_candidateid
+                LEFT JOIN override_races as a on c.raceid = a.race_raceid and c.statepostal = a.race_statepostal)
 ;

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
+DROP TABLE IF EXISTS national_results CASCADE; CREATE TABLE national_results(
         id varchar,
         raceid varchar,
         racetype varchar,
