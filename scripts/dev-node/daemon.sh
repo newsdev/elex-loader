@@ -12,8 +12,8 @@ SCRIPT_DIR=$(dirname $BASH_SOURCE)
 . $SCRIPT_DIR'/_results.sh'
 . $SCRIPT_DIR'/_views.sh'
 
-if [[ ! -z $1 ]] ; then
-    RACEDATE=$1
+if [[ ! -z $1 ]] ; then 
+    RACEDATE=$1 
 fi
 
 AP_TEST_ARG=''
@@ -37,17 +37,22 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
-    let delegates_interval=i%4
     let districts_interval=i%3
 
     pre
-    results
-    if [ "$delegates_interval" -eq 0 ]; then 
-        delegates
-    fi
-    if [ "$districts_interval" -eq 0 ]; then 
-        districts 
-    fi
+    set_db_tables
+
+    # Run local / national results in parallel.
+    # Will block the rest of the scripts until it's done.
+    local_results & PIDLOCAL=$!
+    national_results & PIDNATIONAL=$!
+    wait $PIDLOCAL
+    wait $PIDNATIONAL
+
+    # # Commenting out districts for now.
+    # if [ "$districts_interval" -eq 0 ]; then 
+    #     districts 
+    # fi
     views
     post
 

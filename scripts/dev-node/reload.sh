@@ -22,13 +22,23 @@ fi
 
 AP_TEST_ARG=''
 if [[ "$AP_TEST" = "true" ]] ; then
-	AP_TEST_ARG='&test=true'
+    AP_TEST_ARG='&test=true'
 fi
 
 pre
 overrides
 init
-#districts
-delegates
+
+set_db_tables
+
+# Run local / national results in parallel.
+# Will block the rest of the scripts until it's done.
+local_results &  PIDLOCAL=$!
+national_results &  PIDNATIONAL=$!
+wait $PIDLOCAL
+wait $PIDNATIONAL
+
+# # Commenting out districts for now.
+# districts
 views
 post
