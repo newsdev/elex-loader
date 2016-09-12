@@ -5,10 +5,12 @@ function set_db_tables {
 
 function get_national_results {
     curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/
 }
 
 function get_local_results {
     curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/local/
 }
 
 function load_national_results {
