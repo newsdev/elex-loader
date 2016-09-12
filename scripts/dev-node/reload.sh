@@ -9,6 +9,7 @@ SCRIPT_DIR=$(dirname $BASH_SOURCE)
 . $SCRIPT_DIR'/_init.sh'
 . $SCRIPT_DIR'/_districts.sh'
 . $SCRIPT_DIR'/_delegates.sh'
+. $SCRIPT_DIR'/_results.sh'
 . $SCRIPT_DIR'/_views.sh'
 . $SCRIPT_DIR'/_post.sh'
 
