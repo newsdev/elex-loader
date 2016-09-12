@@ -1,13 +1,14 @@
 #!/bin/bash
 
-. scripts/stg/_admin.sh
-. scripts/stg/_delegates.sh
-. scripts/stg/_districts.sh
-. scripts/stg/_init.sh
-. scripts/stg/_overrides.sh
-. scripts/stg/_post.sh
-. scripts/stg/_pre.sh
-. scripts/stg/_views.sh
+. /home/ubuntu/elex-loader/scripts/stg/_admin.sh
+. /home/ubuntu/elex-loader/scripts/stg/_delegates.sh
+. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
+. /home/ubuntu/elex-loader/scripts/stg/_init.sh
+. /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
+. /home/ubuntu/elex-loader/scripts/stg/_post.sh
+. /home/ubuntu/elex-loader/scripts/stg/_pre.sh
+. /home/ubuntu/elex-loader/scripts/stg/_results.sh
+. /home/ubuntu/elex-loader/scripts/stg/_views.sh
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
