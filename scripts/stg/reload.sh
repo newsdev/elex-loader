@@ -30,7 +30,6 @@ national_results &  PIDNATIONAL=$!
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-districts
 views
 admin
 post

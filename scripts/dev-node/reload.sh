@@ -39,7 +39,5 @@ national_results &  PIDNATIONAL=$!
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-# # Commenting out districts for now.
-# districts
 views
 post
