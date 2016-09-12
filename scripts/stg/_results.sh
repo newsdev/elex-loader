@@ -1,3 +1,5 @@
+TIMESTAMP=$(date +"%s")
+
 function set_db_tables {
     cat fields/local_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
     cat fields/national_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
@@ -5,12 +7,12 @@ function set_db_tables {
 
 function get_national_results {
     curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
-    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
 }
 
 function get_local_results {
     curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
-    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/local/
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/local/ap_elections_loader_recording-LOCAL-$TIMESTAMP.json
 }
 
 function load_national_results {
