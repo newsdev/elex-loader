@@ -40,10 +40,6 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    # # Commenting out districts for now.
-    # if [ "$districts_interval" -eq 0 ]; then 
-    #     districts 
-    # fi
     views
     post
 

@@ -1,18 +1,40 @@
-function get_results {
-    curl --compressed -o /tmp/results_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_API_KEY&format=json&level=ru"
+TIMESTAMP=$(date +"%s")
+
+function set_db_tables {
+    cat fields/local_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat fields/national_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
-function load_results {
-    cat /home/ubuntu/elex-loader/fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE 
-    elex results $RACEDATE -d /tmp/results_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+function get_national_results {
+    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
 }
 
-function results {
-    timestamp=$(date +"%s")
-    if get_results; then
-        load_results
-        cp /tmp/results_$RACEDATE.json /tmp/$RACEDATE/ap_elections_loader_recording-$timestamp.json
+function get_local_results {
+    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
+    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/local/ap_elections_loader_recording-LOCAL-$TIMESTAMP.json
+}
+
+function load_national_results {
+    elex results $RACEDATE -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY national_results FROM stdin DELIMITER ',' CSV HEADER;"
+}
+
+function load_local_results {
+    elex results $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY local_results FROM stdin DELIMITER ',' CSV HEADER;"
+}
+
+function local_results {
+    if get_local_results; then
+        load_local_results
     else
-        echo "ERROR | RESULTS | Bad response. Did not load $RACEDATE."
+        echo "ERROR | LOCAL RESULTS | Bad response. Did not load $RACEDATE."
+    fi
+}
+
+function national_results {
+    if get_national_results; then
+        load_national_results
+    else
+        echo "ERROR | NATIONAL RESULTS | Bad response. Did not load $RACEDATE."
     fi
 }
