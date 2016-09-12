@@ -14,14 +14,22 @@ if [[ ! -z $1 ]] ; then
 fi
 
 if [[ -z $OVERRIDE_DIR ]] ; then
-    OVERRIDE_DIR='/home/ubuntu/elex-loader/overrides'
+    OVERRIDE_DIR='overrides'
 fi
 
 pre
 overrides
 init
+set_db_tables
+
+# Run local / national results in parallel.
+# Will block the rest of the scripts until it's done.
+local_results &  PIDLOCAL=$!
+national_results &  PIDNATIONAL=$!
+wait $PIDLOCAL
+wait $PIDNATIONAL
+
 districts
-delegates
 views
 admin
 post

@@ -11,7 +11,17 @@ if [[ ! -z $1 ]] ; then
 fi
 
 pre
-results
-districts
+set_db_tables
+
+# # Run local / national results in parallel.
+# # Will block the rest of the scripts until it's done.
+local_results & PIDLOCAL=$!
+national_results & PIDNATIONAL=$!
+wait $PIDLOCAL
+wait $PIDNATIONAL
+
+# # Commenting out districts for now.
+# districts
+
 views
 post
