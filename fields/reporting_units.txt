@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS reporting_units CASCADE; CREATE TABLE reporting_units(
     reportingunitname varchar,
     description varchar,
     electiondate varchar,
+    electtotal int,
     fipscode char(5),
     initialization_data bool,
     lastupdated date,
