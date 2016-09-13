@@ -1,22 +1,21 @@
 function set_db_tables {
-    cat fields/local_results.txt | psql elex_$RACEDATE 
-    cat fields/national_results.txt | psql elex_$RACEDATE 
+    cat fields/results.txt | psql elex_$RACEDATE 
 }
 
 function get_national_results {
-    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&setZeroCounts=true"
+    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
 }
 
 function get_local_results {
-    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&setZeroCounts=true"
+    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
 }
 
 function load_national_results {
-    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY national_results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function load_local_results {
-    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY local_results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function local_results {
