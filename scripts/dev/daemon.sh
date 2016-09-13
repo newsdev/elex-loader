@@ -33,17 +33,11 @@ for (( i=1; i<100000; i+=1 )); do
     pre
     set_db_tables
 
-    # Run local / national results in parallel.
-    # Will block the rest of the scripts until it's done.
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    # # Commenting out districts for now.
-    # if [ "$districts_interval" -eq 0 ]; then 
-    #     districts 
-    # fi
     views
     post
 
