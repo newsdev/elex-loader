@@ -33,15 +33,13 @@ for (( i=1; i<100000; i+=1 )); do
     pre
     set_db_tables
 
-    # Run local / national results in parallel.
-    # Will block the rest of the scripts until it's done.
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
     views
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+    cd /home/ubuntu/election-2016/LATEST/ && export NODE_ENV="production" && npm run post-update "$RACEDATE"
     post
 
     sleep $ELEX_LOADER_TIMEOUT
