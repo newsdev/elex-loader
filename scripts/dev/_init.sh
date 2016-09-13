@@ -1,9 +1,9 @@
 function get_national_init {
-    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&test=true&national=true"
+    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&setZeroCounts=true"
 }
 
 function get_local_init {
-    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&test=true&national=false"
+    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&setZeroCounts=true"
 }
 
 function load_init {
@@ -20,8 +20,8 @@ function load_init {
     elex candidates $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
 
     cat fields/ballot_measures.txt | psql elex_$RACEDATE
-    elex candidates $RACEDATE -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
-    elex candidates $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY candidates FROM stdin DELIMITER ',' CSV HEADER;"
+    elex ballot-measures $RACEDATE -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+    elex ballot-measures $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function init {
