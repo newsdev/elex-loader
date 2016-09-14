@@ -26,6 +26,8 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
+    cd /home/ubuntu/elex-loader/
+
     pre
     set_db_tables
 
@@ -35,8 +37,8 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDNATIONAL
 
     views
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     post
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     sleep $ELEX_LOADER_TIMEOUT
 
