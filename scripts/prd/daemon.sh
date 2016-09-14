@@ -20,6 +20,8 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
     ELEX_LOADER_TIMEOUT=30
 fi
 
+. /etc/environment
+
 for (( i=1; i<100000; i+=1 )); do
 
     if [ -f /tmp/elex_loader_timeout.sh ]; then
@@ -39,7 +41,7 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDNATIONAL
 
     views
-    cd /home/ubuntu/election-2016/LATEST/ && export NODE_ENV="production" && npm run post-update "$RACEDATE"
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     post
 
     sleep $ELEX_LOADER_TIMEOUT
