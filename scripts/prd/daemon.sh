@@ -32,10 +32,8 @@ for (( i=1; i<100000; i+=1 )); do
     pre
     set_db_tables
 
-    local_results & PIDLOCAL=$!
-    national_results & PIDNATIONAL=$!
-    wait $PIDLOCAL
-    wait $PIDNATIONAL
+    local_results
+    national_results
 
     views
     post
