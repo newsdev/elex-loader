@@ -7,6 +7,7 @@
 . /home/ubuntu/elex-loader/scripts/prd/_pre.sh
 . /home/ubuntu/elex-loader/scripts/prd/_results.sh
 . /home/ubuntu/elex-loader/scripts/prd/_views.sh
+. /etc/environment
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
@@ -19,8 +20,6 @@ fi
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
     ELEX_LOADER_TIMEOUT=30
 fi
-
-. /etc/environment
 
 for (( i=1; i<100000; i+=1 )); do
 
