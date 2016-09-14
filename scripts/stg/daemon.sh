@@ -1,8 +1,5 @@
 #!/bin/bash
 
-. /home/ubuntu/elex-loader/scripts/stg/_delegates.sh
-. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
-. /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
@@ -28,8 +25,6 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
-
-    let districts_interval=i%3
 
     pre
     set_db_tables
