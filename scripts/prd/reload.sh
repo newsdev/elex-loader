@@ -23,8 +23,6 @@ overrides
 init
 set_db_tables
 
-# Run local / national results in parallel.
-# Will block the rest of the scripts until it's done.
 local_results &  PIDLOCAL=$!
 national_results &  PIDNATIONAL=$!
 wait $PIDLOCAL

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-. /home/ubuntu/elex-loader/scripts/prd/_delegates.sh
-. /home/ubuntu/elex-loader/scripts/prd/_districts.sh
-. /home/ubuntu/elex-loader/scripts/prd/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/prd/_post.sh
 . /home/ubuntu/elex-loader/scripts/prd/_pre.sh
 . /home/ubuntu/elex-loader/scripts/prd/_results.sh
@@ -32,12 +29,13 @@ for (( i=1; i<100000; i+=1 )); do
     pre
     set_db_tables
 
-    local_results
-    national_results
+    local_results & PIDLOCAL=$!
+    national_results & PIDNATIONAL=$!
+    wait $PIDLOCAL
+    wait $PIDNATIONAL
 
     views
     post
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     sleep $ELEX_LOADER_TIMEOUT
 

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-. /home/ubuntu/elex-loader/scripts/prd/_districts.sh
 . /home/ubuntu/elex-loader/scripts/prd/_post.sh
 . /home/ubuntu/elex-loader/scripts/prd/_pre.sh
 . /home/ubuntu/elex-loader/scripts/prd/_results.sh
