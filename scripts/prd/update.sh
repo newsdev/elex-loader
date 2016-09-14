@@ -5,6 +5,7 @@
 . /home/ubuntu/elex-loader/scripts/prd/_pre.sh
 . /home/ubuntu/elex-loader/scripts/prd/_results.sh
 . /home/ubuntu/elex-loader/scripts/prd/_views.sh
+. /etc/environment
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
@@ -20,3 +21,5 @@ wait $PIDNATIONAL
 
 views
 post
+
+cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
