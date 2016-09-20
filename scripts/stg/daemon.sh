@@ -26,6 +26,8 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
+    TIMESTAMP=$(date +"%s")
+
     cd /home/ubuntu/elex-loader/
 
     pre

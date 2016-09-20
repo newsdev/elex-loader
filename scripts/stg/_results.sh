@@ -1,5 +1,3 @@
-TIMESTAMP=$(date +"%s")
-
 function set_db_tables {
     cat fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
