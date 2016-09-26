@@ -11,11 +11,11 @@ function get_local_results {
 }
 
 function load_national_results {
-    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY national_results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function load_local_results {
-    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY local_results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function local_results {
