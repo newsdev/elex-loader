@@ -1,13 +1,9 @@
 #!/bin/bash
 
-. /home/ubuntu/elex-loader/scripts/stg/_delegates.sh
-. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
-. /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_replay_results.sh
 . /home/ubuntu/elex-loader/scripts/stg/_views.sh
-
 . /etc/environment
 
 if [[ ! -z $1 ]] ; then 
@@ -30,7 +26,9 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
-    let districts_interval=i%3
+    TIMESTAMP=$(date +"%s")
+
+    cd /home/ubuntu/elex-loader/
 
     pre
     set_db_tables
@@ -41,8 +39,8 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDNATIONAL
 
     views
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     post
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     sleep $ELEX_LOADER_TIMEOUT
 

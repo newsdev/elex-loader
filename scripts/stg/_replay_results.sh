@@ -1,6 +1,5 @@
 function set_db_tables {
-    cat fields/local_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
-    cat fields/national_results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+    cat fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
 function get_national_results {
