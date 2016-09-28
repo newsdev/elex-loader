@@ -18,6 +18,8 @@ if [[ -z $OVERRIDE_DIR ]] ; then
     OVERRIDE_DIR='overrides'
 fi
 
+TIMESTAMP=$(date +"%s")
+
 pre
 overrides
 init

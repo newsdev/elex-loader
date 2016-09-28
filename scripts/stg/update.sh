@@ -10,6 +10,8 @@ if [[ ! -z $1 ]] ; then
     RACEDATE=$1 
 fi
 
+TIMESTAMP=$(date +"%s")
+
 pre
 set_db_tables
 
