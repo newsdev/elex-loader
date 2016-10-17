@@ -28,7 +28,7 @@ function load_init {
 }
 
 function init {
-    if [ get_national_init ] && [ get_local_init ] ; then
+    if get_national_init && get_local_init ; then
         load_init
     else
         echo "ERROR | INIT | Bad response. Did not load $RACEDATE."
