@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW elex_results as
     SELECT x.*, y.*, z.* FROM results as z
-        LEFT JOIN override_candidates as y on z.candidateid = y.candidate_candidateid
+        LEFT JOIN override_candidates as y on z.unique_id = y.candidate_unique_id
         LEFT JOIN override_races as x on z.raceid = x.race_raceid and z.statepostal = x.race_statepostal
 ;
