@@ -22,6 +22,9 @@ function load_init {
     cat fields/ballot_measures.txt | psql elex_$RACEDATE
     elex ballot-measures $RACEDATE -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
     elex ballot-measures $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY ballot_positions FROM stdin DELIMITER ',' CSV HEADER;"
+
+    cat fields/race_overrides.txt | psql elex_$RACEDATE
+    cat fields/candidate_overrides.txt | psql elex_$RACEDATE
 }
 
 function init {
