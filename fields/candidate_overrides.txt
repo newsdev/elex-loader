@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS override_candidates CASCADE; CREATE TABLE override_candidates(
-    candidate_unique_id varchar,
+    id varchar,
     nyt_candidate_name varchar,
     nyt_candidate_important bool,
     nyt_candidate_description text,

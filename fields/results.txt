@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
         statepostal char(2),
         test bool,
         uncontested bool,
-        unique_id varchar,
+        candidate_unique_id varchar,
         votecount int,
         votepct numeric,
         winner bool

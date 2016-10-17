@@ -7,5 +7,5 @@ DROP TABLE IF EXISTS candidates CASCADE; CREATE TABLE candidates(
     party varchar,
     polid varchar,
     polnum varchar,
-    unique_id varchar
+    candidate_unique_id varchar
 );
