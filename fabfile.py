@@ -7,13 +7,13 @@ from fabric.state import env
 
 ENVIRONMENTS = {
     "west": {
-        "hosts": 'ec2-50-18-105-1.us-west-1.compute.amazonaws.com',
+        "hosts": 'int-elex-prd-west.newsdev.net',
     },
     "prd": {
-        "hosts": 'ec2-54-227-242-85.compute-1.amazonaws.com',
+        "hosts": 'int-elex-prd-east.newsdev.net',
     }, 
     "stg": {
-        "hosts": 'ec2-107-20-172-193.compute-1.amazonaws.com',
+        "hosts": 'int-elex-stg-east.newsdev.net',
     }
 }
 
