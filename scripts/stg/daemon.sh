@@ -18,6 +18,10 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
     ELEX_LOADER_TIMEOUT=30
 fi
 
+if [[ -z $AP_API_BASE_URL ]] ; then
+    AP_API_BASE_URL="http://api.ap.org/v2/"
+fi
+
 for (( i=1; i<100000; i+=1 )); do
 
     if [ -f /tmp/elex_loader_timeout.sh ]; then

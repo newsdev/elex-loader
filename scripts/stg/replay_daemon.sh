@@ -2,7 +2,7 @@
 
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
-. /home/ubuntu/elex-loader/scripts/stg/_replay_results.sh
+. /home/ubuntu/elex-loader/scripts/stg/_results.sh
 . /home/ubuntu/elex-loader/scripts/stg/_views.sh
 . /etc/environment
 
@@ -16,6 +16,10 @@ fi
 
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
     ELEX_LOADER_TIMEOUT=30
+fi
+
+if [[ -z $AP_API_BASE_URL ]] ; then
+    AP_API_BASE_URL="http://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
