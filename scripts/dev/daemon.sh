@@ -1,6 +1,4 @@
 #!/bin/bash
-
-. scripts/dev/_delegates.sh
 . scripts/dev/_districts.sh
 . scripts/dev/_overrides.sh
 . scripts/dev/_post.sh
@@ -39,6 +37,8 @@ for (( i=1; i<100000; i+=1 )); do
 
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
+    districts & PIDDISTRICTS=$!
+    wait $PIDDISTRICTS
     wait $PIDLOCAL
     wait $PIDNATIONAL
 

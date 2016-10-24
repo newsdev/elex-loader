@@ -1,5 +1,5 @@
 #!/bin/bash
-
+. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
@@ -39,6 +39,8 @@ for (( i=1; i<100000; i+=1 )); do
 
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
+    districts & PIDDISTRICTS=$!
+    wait $PIDDISTRICTS
     wait $PIDLOCAL
     wait $PIDNATIONAL
 

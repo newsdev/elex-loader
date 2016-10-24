@@ -1,7 +1,5 @@
 #!/bin/bash
-
 . /home/ubuntu/elex-loader/scripts/stg/_admin.sh
-. /home/ubuntu/elex-loader/scripts/stg/_delegates.sh
 . /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_init.sh
 . /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
@@ -32,6 +30,8 @@ set_db_tables
 
 local_results &  PIDLOCAL=$!
 national_results &  PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 

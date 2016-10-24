@@ -1,5 +1,4 @@
 #!/bin/bash
-
 . scripts/dev/_districts.sh
 . scripts/dev/_post.sh
 . scripts/dev/_pre.sh
@@ -21,6 +20,8 @@ echo $AP_API_BASE_URL
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 . scripts/dev/_districts.sh
 . scripts/dev/_init.sh
 . scripts/dev/_overrides.sh
@@ -26,8 +25,10 @@ set_db_tables
 
 echo $AP_API_BASE_URL
 
-local_results &  PIDLOCAL=$!
-national_results &  PIDNATIONAL=$!
+local_results & PIDLOCAL=$!
+national_results & PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 

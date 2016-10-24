@@ -8,7 +8,6 @@ SCRIPT_DIR=$(dirname $BASH_SOURCE)
 . $SCRIPT_DIR'/_overrides.sh'
 . $SCRIPT_DIR'/_init.sh'
 . $SCRIPT_DIR'/_districts.sh'
-. $SCRIPT_DIR'/_delegates.sh'
 . $SCRIPT_DIR'/_results.sh'
 . $SCRIPT_DIR'/_views.sh'
 . $SCRIPT_DIR'/_post.sh'
@@ -36,6 +35,8 @@ set_db_tables
 # Will block the rest of the scripts until it's done.
 local_results &  PIDLOCAL=$!
 national_results &  PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 . /home/ubuntu/elex-loader/scripts/prd/_admin.sh
 . /home/ubuntu/elex-loader/scripts/prd/_delegates.sh
 . /home/ubuntu/elex-loader/scripts/prd/_districts.sh
@@ -27,6 +26,8 @@ set_db_tables
 
 local_results &  PIDLOCAL=$!
 national_results &  PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 

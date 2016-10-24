@@ -4,7 +4,6 @@
 # and when installed into Node modules
 SCRIPT_DIR=$(dirname $BASH_SOURCE)
 
-. $SCRIPT_DIR'/_delegates.sh'
 . $SCRIPT_DIR'/_districts.sh'
 . $SCRIPT_DIR'/_overrides.sh'
 . $SCRIPT_DIR'/_post.sh'
@@ -46,6 +45,8 @@ for (( i=1; i<100000; i+=1 )); do
     # Will block the rest of the scripts until it's done.
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
+    districts & PIDDISTRICTS=$!
+    wait $PIDDISTRICTS
     wait $PIDLOCAL
     wait $PIDNATIONAL
 

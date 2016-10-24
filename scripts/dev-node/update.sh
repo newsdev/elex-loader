@@ -26,6 +26,8 @@ set_db_tables
 # # Will block the rest of the scripts until it's done.
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
+districts & PIDDISTRICTS=$!
+wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
