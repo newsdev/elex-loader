@@ -92,4 +92,4 @@ def init(racedate=None):
 @api.task
 def deploy():
     pull()
-    pip_install()
+    upgrade()
