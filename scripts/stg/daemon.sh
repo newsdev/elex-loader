@@ -29,6 +29,8 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
+    
+    SECONDS=0
 
     TIMESTAMP=$(date +"%s")
 
@@ -45,6 +47,8 @@ for (( i=1; i<100000; i+=1 )); do
     views
     post
     cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+    
+    echo "Time elapsed:" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
