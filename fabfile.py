@@ -6,7 +6,10 @@ from fabric import api, operations, contrib
 from fabric.state import env
 
 ENVIRONMENTS = {
-    "west": {
+    "stg-west": {
+        "hosts": 'int-elex-stg-west.newsdev.net',
+    },
+    "prd-west": {
         "hosts": 'int-elex-prd-west.newsdev.net',
     },
     "prd": {
