@@ -46,9 +46,12 @@ for (( i=1; i<100000; i+=1 )); do
 
     views
     post
+    
+    echo "Results time elapsed:" $SECONDS"s"
+    
     cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
     
-    echo "Time elapsed:" $SECONDS"s"
+    echo "Total time elapsed:" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
