@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW elex_results as
-    SELECT x.*, y.nyt_candidate_name,y.nyt_candidate_important,y.nyt_candidate_description,y.nyt_races,y.nyt_display_order,y.nyt_winner,y.nyt_delegates, z.* FROM results as z
-        LEFT JOIN override_candidates as y on z.id = y.id
-        LEFT JOIN override_races as x on z.raceid = x.race_raceid and z.statepostal = x.race_statepostal
+    SELECT orace.race_unique_id, orace.report, orace.nyt_race_name, orace.nyt_race_description, orace.accept_ap_calls, orace.nyt_called, ocand.nyt_winner,ocand.nyt_name, result.* FROM results as result
+        JOIN override_candidates as ocand on result.candidate_unique_id = ocand.candidate_unique_id and result.statepostal = ocand.statepostal and result.raceid = ocand.raceid
+        JOIN override_races as orace on orace.statepostal = result.statepostal and orace.raceid = result.raceid
 ;

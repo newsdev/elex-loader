@@ -1,4 +1,0 @@
-CREATE OR REPLACE VIEW elex_candidates as
-       SELECT c.nyt_candidate_name,c.nyt_candidate_important,c.nyt_candidate_description,c.nyt_races,c.nyt_display_order,c.nyt_winner,c.nyt_delegates, r.* from candidates as r
-           LEFT JOIN override_candidates as c on r.id = c.id
-;

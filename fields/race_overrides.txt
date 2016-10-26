@@ -1,14 +1,13 @@
-DROP TABLE IF EXISTS override_races CASCADE; CREATE TABLE override_races(
-    nyt_race_preview text,
-    nyt_race_result_description text,
-    nyt_delegate_allocation text,
-    report bool,
-    report_description text,
-    race_raceid varchar,
-    race_statepostal varchar,
-    nyt_race_name varchar,
-    nyt_race_description text,
-    accept_ap_calls bool,
-    nyt_called bool,
-    nyt_race_important bool
-);
+DROP TABLE IF EXISTS override_races CASCADE; 
+
+create table override_races as 
+    select raceid, 
+            statepostal, 
+            cast (false AS BOOLEAN) as report, 
+            cast (null AS VARCHAR(255)) as nyt_race_name, 
+            cast (null AS VARCHAR(255)) as nyt_race_description, 
+            cast (false AS BOOLEAN) as accept_ap_calls, 
+            cast (false AS BOOLEAN) as nyt_called,
+            statepostal || '-' || raceid as race_unique_id
+        from results
+        group by raceid, statepostal;

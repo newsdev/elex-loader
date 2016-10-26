@@ -16,8 +16,6 @@ fi
 pre
 set_db_tables
 
-echo $AP_API_BASE_URL
-
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
 districts & PIDDISTRICTS=$!

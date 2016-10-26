@@ -1,6 +1,5 @@
 #!/bin/bash
 . scripts/dev/_districts.sh
-. scripts/dev/_init.sh
 . scripts/dev/_overrides.sh
 . scripts/dev/_post.sh
 . scripts/dev/_pre.sh
@@ -20,10 +19,7 @@ if [[ -z $AP_API_BASE_URL ]] ; then
 fi
 
 pre
-init
 set_db_tables
-
-echo $AP_API_BASE_URL
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
@@ -32,5 +28,6 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
+overrides
 views
 post

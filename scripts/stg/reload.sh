@@ -24,8 +24,6 @@ fi
 TIMESTAMP=$(date +"%s")
 
 pre
-overrides
-init
 set_db_tables
 
 local_results &  PIDLOCAL=$!
@@ -35,6 +33,6 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
+overrides
 views
-admin
 post
