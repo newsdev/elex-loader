@@ -1,5 +1,5 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/prd/_districts.sh
+. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
@@ -18,7 +18,9 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
     ELEX_LOADER_TIMEOUT=30
 fi
 
-AP_API_BASE_URL="http://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
+if [[ -z $AP_API_BASE_URL ]] ; then
+    AP_API_BASE_URL="http://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
+fi
 
 for (( i=1; i<100000; i+=1 )); do
 
@@ -27,6 +29,8 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
+    
+    SECONDS=0
 
     TIMESTAMP=$(date +"%s")
 
@@ -44,7 +48,12 @@ for (( i=1; i<100000; i+=1 )); do
 
     views
     post
+    
+    echo "Results time elapsed:" $SECONDS"s"
+    
     cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+    
+    echo "Total time elapsed:" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
