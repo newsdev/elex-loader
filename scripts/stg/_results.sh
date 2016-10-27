@@ -43,5 +43,5 @@ function national_results {
 }
 
 function copy_results {
-    psql elex_$RACEDATE -c "drop table results cascade; select * into results from results_temp;"
+    psql elex_$RACEDATE -c "DROP TABLE results CASCADE; CREATE TABLE results AS TABLE results_temp;"
 }
