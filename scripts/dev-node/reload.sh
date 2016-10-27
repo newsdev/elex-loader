@@ -26,15 +26,16 @@ if [[ "$AP_TEST" = "true" ]] ; then
 fi
 
 pre
-set_db_tables
+set_temp_tables
 
-local_results &  PIDLOCAL=$!
-national_results &  PIDNATIONAL=$!
+local_results & PIDLOCAL=$!
+national_results & PIDNATIONAL=$!
 districts & PIDDISTRICTS=$!
 wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
+copy_results
 overrides
 views
 post

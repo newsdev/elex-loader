@@ -14,7 +14,7 @@ if [[ -z $AP_API_BASE_URL ]] ; then
 fi
 
 pre
-set_db_tables
+set_temp_tables
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
@@ -23,5 +23,6 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
+copy_results
 views
 post

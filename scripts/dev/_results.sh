@@ -1,9 +1,12 @@
-function set_db_tables {
+function set_live_tables {
     cat fields/results.txt | psql elex_$RACEDATE 
 }
 
+function set_temp_tables {
+    cat fields/results_temp.txt | psql elex_$RACEDATE
+}
+
 function get_national_results {
-    echo $AP_API_BASE_URL
     curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
 }
 
@@ -12,11 +15,11 @@ function get_local_results {
 }
 
 function load_national_results {
-    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function load_local_results {
-    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function local_results {
@@ -33,4 +36,8 @@ function national_results {
     else
         echo "ERROR | NATIONAL RESULTS | Bad response. Did not load $RACEDATE."
     fi
+}
+
+function copy_results {
+    psql elex_$RACEDATE -c "drop table results cascade; select * into results from results_temp;"
 }

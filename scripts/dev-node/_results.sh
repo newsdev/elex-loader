@@ -1,5 +1,9 @@
-function set_db_tables {
+function set_live_tables {
     cat $SCRIPT_DIR'/../../fields/results.txt' | psql elex_$RACEDATE
+}
+
+function set_temp_tables {
+    cat $SCRIPT_DIR'/../../fields/results_temp.txt' | psql elex_$RACEDATE
 }
 
 function get_national_results {
@@ -32,4 +36,8 @@ function national_results {
     else
         echo "ERROR | NATIONAL RESULTS | Bad response. Did not load $RACEDATE."
     fi
+}
+
+function copy_results {
+    psql elex_$RACEDATE -c "drop table results cascade; select * into results from results_temp;"
 }

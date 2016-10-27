@@ -33,7 +33,7 @@ for (( i=1; i<100000; i+=1 )); do
     let districts_interval=i%3
 
     pre
-    set_db_tables
+    set_temp_tables
 
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
@@ -42,6 +42,7 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
+    copy_results
     views
     post
 

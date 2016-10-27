@@ -3,7 +3,7 @@ function get_districts {
 }
 
 function load_districts {
-    cat /tmp/districts_$RACEDATE.csv | grep 'Z,district,\|,lastupdated,level,national,' | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /tmp/districts_$RACEDATE.csv | grep 'Z,district,\|,lastupdated,level,national,' | psql elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function districts {
