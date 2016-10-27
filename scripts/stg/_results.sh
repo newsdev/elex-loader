@@ -7,13 +7,13 @@ function set_temp_tables {
 }
 
 function get_national_results {
-    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
+    echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
     curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
     cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
 }
 
 function get_local_results {
-    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
+    echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
     curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
     cp /tmp/results_local_$RACEDATE.json /tmp/$RACEDATE/local/ap_elections_loader_recording-LOCAL-$TIMESTAMP.json
 }
