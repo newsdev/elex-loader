@@ -19,7 +19,7 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
-    AP_API_BASE_URL="http://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
+    AP_API_BASE_URL="http://api.ap.org/v2/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
@@ -46,8 +46,8 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    copy_results
-    # truncate_copy
+    # copy_results
+    truncate_copy
     # truncate_insert
     views
     post

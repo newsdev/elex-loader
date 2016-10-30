@@ -46,8 +46,8 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    # copy_results
-    truncate_copy
+    copy_results
+    # truncate_copy
     # truncate_insert
     views
     post
