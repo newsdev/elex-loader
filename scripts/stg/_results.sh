@@ -47,7 +47,7 @@ function copy_results {
 }
 
 function truncate_copy {
-    psql elex_$RACEDATE -c "TRUNCATE results CASCADE;" && psql elex_$RACEDATE -c "COPY results_temp TO stdout DELIMITER ',' CSV HEADER;" | psql elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
+    psql elex_$RACEDATE -c "TRUNCATE results CASCADE;" && psql elex_$RACEDATE -c "COPY results_temp TO stdout DELIMITER ',' CSV HEADER;" | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function truncate_insert {
