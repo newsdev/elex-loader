@@ -28,7 +28,9 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-copy_results
+# copy_results
+truncate_copy
+# truncate_insert
 overrides
 views
 post
