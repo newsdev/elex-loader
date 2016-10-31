@@ -35,3 +35,7 @@ function national_results {
         echo "ERROR | NATIONAL RESULTS | Bad response. Did not load $RACEDATE."
     fi
 }
+
+function copy_results
+    psql elex_$RACEDATE -c "TRUNCATE results CASCADE; INSERT INTO results SELECT * FROM results_temp;"
+}

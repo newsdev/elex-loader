@@ -23,8 +23,6 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-# copy_results
-truncate_copy
-# truncate_insert
+copy_results
 views
 post

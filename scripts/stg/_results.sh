@@ -42,14 +42,6 @@ function national_results {
     fi
 }
 
-function copy_results {
-    psql elex_$RACEDATE -c "DROP TABLE results CASCADE; CREATE TABLE results AS TABLE results_temp;"
-}
-
-function truncate_copy {
-    psql elex_$RACEDATE -c "TRUNCATE results CASCADE;" && psql elex_$RACEDATE -c "COPY results_temp TO stdout DELIMITER ',' CSV HEADER;" | psql elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
-}
-
-function truncate_insert {
+function copy_results
     psql elex_$RACEDATE -c "TRUNCATE results CASCADE; INSERT INTO results SELECT * FROM results_temp;"
 }

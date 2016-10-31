@@ -38,6 +38,6 @@ function national_results {
     fi
 }
 
-function copy_results {
-    psql elex_$RACEDATE -c "DROP TABLE results CASCADE; CREATE TABLE results AS TABLE results_temp;"
+function copy_results
+    psql elex_$RACEDATE -c "TRUNCATE results CASCADE; INSERT INTO results SELECT * FROM results_temp;"
 }
