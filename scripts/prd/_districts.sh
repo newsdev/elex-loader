@@ -3,7 +3,7 @@ function get_districts {
 }
 
 function load_districts {
-    elex results $RACEDATE -t -d /tmp/results_district_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_district_$RACEDATE.json | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function districts {
