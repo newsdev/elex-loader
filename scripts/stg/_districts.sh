@@ -1,9 +1,9 @@
 function get_districts {
-    elex results $RACEDATE --results-level district > /tmp/districts_$RACEDATE.csv
+    curl --compressed -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"
 }
 
 function load_districts {
-    cat /tmp/districts_$RACEDATE.csv | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
+    cat /tmp/results_district_$RACEDATE.json | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function districts {
