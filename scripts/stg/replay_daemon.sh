@@ -19,7 +19,7 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
-    AP_API_BASE_URL="http://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
+    AP_API_BASE_URL="https://int-elex-stg-east.newsdev.net/elections/2016/deja-vu/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
