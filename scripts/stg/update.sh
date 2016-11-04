@@ -27,4 +27,3 @@ wait $PIDNATIONAL
 
 copy_results
 views
-post
