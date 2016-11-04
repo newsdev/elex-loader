@@ -8,7 +8,7 @@ create table override_candidates as
             cast(false AS BOOLEAN) as nyt_winner, 
             cast(null AS VARCHAR(255)) as nyt_name,
             cast(0 AS SMALLINT) as nyt_electwon
-        from results where level in ('state', 'district') and officeid in ('S','H','G')
+        from results where level in ('state', 'district') and officeid != 'P'
         group by raceid, statepostal, candidate_unique_id;
 
 insert into override_candidates
