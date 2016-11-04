@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS results CASCADE; CREATE TABLE results(
     seatname varchar,
     seatnum varchar,
     statename varchar,
-    statepostal char(2),
+    statepostal varchar,
     test bool,
     uncontested bool,
     candidate_unique_id varchar,

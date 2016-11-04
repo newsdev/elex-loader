@@ -1,6 +1,7 @@
 CREATE OR REPLACE VIEW elex_races AS
-    SELECT r.raceid, r.statepostal, r.officeid, r.national, o.race_unique_id, o.accept_ap_calls
+    SELECT r.raceid, r.reportingunitid, r.statepostal, r.officeid, r.national, o.race_unique_id, o.accept_ap_calls 
         FROM results AS r
-            LEFT JOIN override_races AS o ON o.raceid = r.raceid AND o.statepostal = r.statepostal
-            GROUP BY r.raceid, r.statepostal, r.officeid, r.national, o.race_unique_id, o.accept_ap_calls
+            LEFT JOIN override_races AS o ON o.raceid = r.raceid AND o.statepostal = r.statepostal AND o.reportingunitid = r.reportingunitid
+            WHERE r.level IN ('state', 'district')
+            GROUP BY r.raceid, r.reportingunitid, r.statepostal, r.officeid, r.national, o.race_unique_id, o.accept_ap_calls
 ;

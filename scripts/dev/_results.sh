@@ -7,11 +7,11 @@ function set_temp_tables {
 }
 
 function get_national_results {
-    curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+    curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
 }
 
 function get_local_results {
-    curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
+    curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
 }
 
 function load_national_results {
