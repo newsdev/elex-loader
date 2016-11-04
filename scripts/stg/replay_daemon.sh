@@ -51,7 +51,7 @@ for (( i=1; i<100000; i+=1 )); do
     post
 
     echo "Results time elapsed:" $SECONDS"s"
-
+    echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
     cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     echo "Total time elapsed:" $SECONDS"s"
