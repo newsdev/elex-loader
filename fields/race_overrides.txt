@@ -10,5 +10,5 @@ create table override_races as
             cast (TRUE AS BOOLEAN) as accept_ap_calls, 
             cast (FALSE AS BOOLEAN) as nyt_called,
             statepostal || '-' || raceid as race_unique_id
-        from results where level in ('state', 'district') and officeid in ('P','S','H','G')
+        from results where level in ('state', 'district')
         group by raceid, statepostal, reportingunitid;
