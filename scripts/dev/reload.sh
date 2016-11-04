@@ -1,7 +1,6 @@
 #!/bin/bash
 . scripts/dev/_districts.sh
 . scripts/dev/_overrides.sh
-. scripts/dev/_post.sh
 . scripts/dev/_pre.sh
 . scripts/dev/_results.sh
 . scripts/dev/_views.sh
@@ -18,6 +17,8 @@ if [[ -z $AP_API_BASE_URL ]] ; then
     AP_API_BASE_URL="http://api.ap.org/v2/"
 fi
 
+TIMESTAMP=$(date +"%s")
+
 pre
 set_temp_tables
 set_live_tables
@@ -32,4 +33,3 @@ wait $PIDNATIONAL
 copy_results
 overrides
 views
-post
