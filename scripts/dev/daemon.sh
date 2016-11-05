@@ -29,8 +29,12 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
+    
+    SECONDS=0
 
-    let districts_interval=i%3
+    TIMESTAMP=$(date +"%s")
+
+    # cd /home/ubuntu/elex-loader/
 
     pre
     set_temp_tables
@@ -45,6 +49,12 @@ for (( i=1; i<100000; i+=1 )); do
     copy_results
     views
     post
+
+    echo "Results time elapsed:" $SECONDS"s"
+    # echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+    # cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+
+    echo "Total time elapsed:" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
