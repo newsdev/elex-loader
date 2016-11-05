@@ -1,8 +1,8 @@
 CREATE OR REPLACE VIEW elex_results as
 (SELECT DISTINCT orace.race_unique_id, orace.report, orace.nyt_race_name, orace.nyt_race_description, orace.accept_ap_calls, orace.nyt_called, ocand.nyt_winner,ocand.nyt_name, ocand.nyt_electwon, result.* FROM results as result
-        JOIN override_candidates as ocand on result.candidate_unique_id = ocand.candidate_unique_id and result.statepostal = ocand.statepostal and result.raceid = ocand.raceid
-        JOIN override_races as orace on orace.statepostal = result.statepostal and orace.raceid = result.raceid
+        LEFT JOIN override_candidates as ocand on result.candidate_unique_id = ocand.candidate_unique_id and result.statepostal = ocand.statepostal and result.raceid = ocand.raceid
+        LEFT JOIN override_races as orace on orace.statepostal = result.statepostal and orace.raceid = result.raceid
         WHERE result.raceid != '0') UNION (SELECT DISTINCT orace.race_unique_id, orace.report, orace.nyt_race_name, orace.nyt_race_description, orace.accept_ap_calls, orace.nyt_called, ocand.nyt_winner,ocand.nyt_name, ocand.nyt_electwon, result.* FROM results as result
-        JOIN override_candidates as ocand on result.candidate_unique_id = ocand.candidate_unique_id and result.statepostal = ocand.statepostal and result.raceid = ocand.raceid AND ocand.reportingunitid = result.reportingunitid
-        JOIN override_races as orace on orace.statepostal = result.statepostal and orace.raceid = result.raceid and orace.reportingunitid = result.reportingunitid
+        LEFT JOIN override_candidates as ocand on result.candidate_unique_id = ocand.candidate_unique_id and result.statepostal = ocand.statepostal and result.raceid = ocand.raceid AND ocand.reportingunitid = result.reportingunitid
+        LEFT JOIN override_races as orace on orace.statepostal = result.statepostal and orace.raceid = result.raceid and orace.reportingunitid = result.reportingunitid
         WHERE result.raceid = '0');
