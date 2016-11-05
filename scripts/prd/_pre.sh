@@ -1,9 +1,9 @@
 function pre {
     if [[ ! -z $1 ]] ; then
-        RACEDATE=$1 
+        RACEDATE=$1
     fi
 
-    if [[ -z $RACEDATE ]] ; then 
+    if [[ -z $RACEDATE ]] ; then
         echo 'Provide a race date, such as 2016-02-01'
         exit 1
     fi

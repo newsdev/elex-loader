@@ -1,23 +1,27 @@
-function set_db_tables {
+function set_live_tables {
     cat fields/results.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
 }
 
+function set_temp_tables {
+    cat fields/results_temp.txt | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE
+}
+
 function get_national_results {
-    curl --compressed -o /tmp/results_national_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+    curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
     cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
 }
 
 function get_local_results {
-    curl --compressed -o /tmp/results_local_$RACEDATE.json "http://api.ap.org/v2/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
+    curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
     cp /tmp/results_local_$RACEDATE.json /tmp/$RACEDATE/local/ap_elections_loader_recording-LOCAL-$TIMESTAMP.json
 }
 
 function load_national_results {
-    elex results $RACEDATE -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function load_local_results {
-    elex results $RACEDATE -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function local_results {
