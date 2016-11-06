@@ -1,5 +1,5 @@
 function get_districts {
-    curl --compressed -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"
+    curl --compressed -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"
     # cp /tmp/results_district_$RACEDATE.json /tmp/$RACEDATE/districts/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
 }
 
