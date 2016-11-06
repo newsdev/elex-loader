@@ -27,6 +27,7 @@ fi
 
 pre
 set_temp_tables
+set_live_tables
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
