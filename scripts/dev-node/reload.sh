@@ -25,8 +25,13 @@ if [[ "$AP_TEST" = "true" ]] ; then
     AP_TEST_ARG='&test=true'
 fi
 
+if [[ -z $AP_API_BASE_URL ]] ; then
+    AP_API_BASE_URL="http://api.ap.org/v2/"
+fi
+
 pre
 set_temp_tables
+set_live_tables
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
