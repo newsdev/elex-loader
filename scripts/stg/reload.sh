@@ -23,6 +23,8 @@ pre
 set_temp_tables
 set_live_tables
 
+export ELEX_LOADER_ERROR=false
+
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
 districts & PIDDISTRICTS=$!
@@ -30,6 +32,14 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-copy_results
-overrides
-views
+if [ ! $ELEX_LOADER_ERROR ] ; then
+    copy_results
+    overrides
+    views
+
+    echo "Results time elapsed:" $SECONDS"s"
+
+    echo "Total time elapsed:" $SECONDS"s"
+fi
+
+export ERROR=false

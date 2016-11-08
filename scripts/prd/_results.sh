@@ -7,13 +7,15 @@ function set_temp_tables {
 }
 
 function get_national_results {
-    curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
-    cp /tmp/results_national_$RACEDATE.json /tmp/$RACEDATE/national/ap_elections_loader_recording-NATIONAL-$TIMESTAMP.json
+    curl --compressed -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"  >/dev/null 2>&1
 }
 
 function get_local_results {
-    curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
-    cp /tmp/results_local_$RACEDATE.json /tmp/$RACEDATE/local/ap_elections_loader_recording-LOCAL-$TIMESTAMP.json
+    curl --compressed -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true" >/dev/null 2>&1
+}
+
+function get_districts {
+    curl --compressed -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"  >/dev/null 2>&1
 }
 
 function load_national_results {
@@ -24,11 +26,25 @@ function load_local_results {
     elex results $RACEDATE -t -d /tmp/results_local_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
+function load_districts {
+    elex results $RACEDATE -t -d /tmp/results_district_$RACEDATE.json | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
+}
+
+function districts {
+    if get_districts; then
+        load_districts
+    else
+        export ELEX_LOADER_ERROR=true
+        echo 'ELEX LOADER error: Districts failed to download.'
+    fi
+}
+
 function local_results {
     if get_local_results; then
         load_local_results
     else
-        echo "ERROR | LOCAL RESULTS | Bad response. Did not load $RACEDATE."
+        export ELEX_LOADER_ERROR=true
+        echo 'ELEX LOADER error: Local results failed to download.'
     fi
 }
 
@@ -36,7 +52,8 @@ function national_results {
     if get_national_results; then
         load_national_results
     else
-        echo "ERROR | NATIONAL RESULTS | Bad response. Did not load $RACEDATE."
+        export ELEX_LOADER_ERROR=true
+        echo 'ELEX LOADER error: National results failed to download.'
     fi
 }
 

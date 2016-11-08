@@ -1,7 +1,5 @@
 #!/bin/bash
-. scripts/dev/_districts.sh
 . scripts/dev/_overrides.sh
-. scripts/dev/_post.sh
 . scripts/dev/_pre.sh
 . scripts/dev/_results.sh
 . scripts/dev/_views.sh
@@ -20,6 +18,7 @@ fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
     AP_API_BASE_URL="http://api.ap.org/v2/"
+    # AP_API_BASE_URL="http://127.0.0.1/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
@@ -34,10 +33,12 @@ for (( i=1; i<100000; i+=1 )); do
 
     TIMESTAMP=$(date +"%s")
 
-    # cd /home/ubuntu/elex-loader/
-
     pre
     set_temp_tables
+
+    echo "ELEX LOADER downloading files."
+
+    export ELEX_LOADER_ERROR=false
 
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
@@ -46,15 +47,16 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    copy_results
-    views
-    post
+    if [ ! $ELEX_LOADER_ERROR ] ; then
+        copy_results
+        views
 
-    echo "Results time elapsed:" $SECONDS"s"
-    # echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-    # cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+        echo "Results time elapsed:" $SECONDS"s"
 
-    echo "Total time elapsed:" $SECONDS"s"
+        echo "Total time elapsed:" $SECONDS"s"
+    fi
+
+    export ERROR=false
 
     sleep $ELEX_LOADER_TIMEOUT
 

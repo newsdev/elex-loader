@@ -1,9 +1,9 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/prd/_districts.sh
-. /home/ubuntu/elex-loader/scripts/prd/_overrides.sh
-. /home/ubuntu/elex-loader/scripts/prd/_pre.sh
-. /home/ubuntu/elex-loader/scripts/prd/_results.sh
-. /home/ubuntu/elex-loader/scripts/prd/_views.sh
+. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
+. /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
+. /home/ubuntu/elex-loader/scripts/stg/_pre.sh
+. /home/ubuntu/elex-loader/scripts/stg/_results.sh
+. /home/ubuntu/elex-loader/scripts/stg/_views.sh
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
@@ -23,6 +23,8 @@ pre
 set_temp_tables
 set_live_tables
 
+export ELEX_LOADER_ERROR=false
+
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
 districts & PIDDISTRICTS=$!
@@ -30,6 +32,14 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-copy_results
-overrides
-views
+if [ ! $ELEX_LOADER_ERROR ] ; then
+    copy_results
+    overrides
+    views
+
+    echo "Results time elapsed:" $SECONDS"s"
+
+    echo "Total time elapsed:" $SECONDS"s"
+fi
+
+export ERROR=false
