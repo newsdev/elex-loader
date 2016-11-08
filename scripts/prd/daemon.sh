@@ -39,7 +39,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "ELEX LOADER downloading files."
 
-    export ELEX_LOADER_ERROR=false
+    export ELEX_LOADER_ERROR="0"
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
@@ -52,7 +52,7 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ !$ELEX_LOADER_ERROR ] ; then
+    if [ $ELEX_LOADER_ERROR == "1" ] ; then
         copy_results
         views
 
@@ -63,7 +63,7 @@ for (( i=1; i<100000; i+=1 )); do
         echo "Total time elapsed (A):" $SECONDS"s"
     fi
 
-    export ERROR=false
+    export ERROR="0"
 
     sleep $ELEX_LOADER_TIMEOUT
 

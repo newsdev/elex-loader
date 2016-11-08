@@ -16,8 +16,8 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
-    # AP_API_BASE_URL="http://api.ap.org/v2/"
-    AP_API_BASE_URL="http://127.0.0.1/"
+    AP_API_BASE_URL="http://api.ap.org/v2/"
+    # AP_API_BASE_URL="http://127.0.0.1/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
@@ -37,7 +37,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "ELEX LOADER downloading files."
 
-    export ELEX_LOADER_ERROR=false
+    export ELEX_LOADER_ERROR="0"
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
@@ -50,7 +50,7 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ !$ELEX_LOADER_ERROR ] ; then
+    if [ $ELEX_LOADER_ERROR == "1" ] ; then
         copy_results
         views
 
@@ -59,7 +59,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     fi
 
-    export ERROR=false
+    export ERROR="0"
 
     sleep $ELEX_LOADER_TIMEOUT
 
