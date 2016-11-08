@@ -16,8 +16,8 @@ if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
-    AP_API_BASE_URL="http://api.ap.org/v2/"
-    # AP_API_BASE_URL="http://127.0.0.1/"
+    # AP_API_BASE_URL="http://api.ap.org/v2/"
+    AP_API_BASE_URL="http://127.0.0.1/"
 fi
 
 for (( i=1; i<100000; i+=1 )); do
