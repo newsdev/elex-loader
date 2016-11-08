@@ -7,15 +7,15 @@ function set_temp_tables {
 }
 
 function get_national_results {
-    curl --compressed -f -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"  >/dev/null 2>&1
+    curl --compressed -f -o /tmp/results_national_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"  >/dev/null 2>&1
 }
 
 function get_local_results {
-    curl --compressed -f -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true" >/dev/null 2>&1
+    curl --compressed -f -o /tmp/results_local_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false" >/dev/null 2>&1
 }
 
 function get_districts {
-    curl --compressed -f -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"  >/dev/null 2>&1
+    curl --compressed -f -o /tmp/results_district_$RACEDATE.json $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"  >/dev/null 2>&1
 }
 
 function load_national_results {
