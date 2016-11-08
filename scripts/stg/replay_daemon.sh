@@ -42,6 +42,10 @@ for (( i=1; i<100000; i+=1 )); do
 
     export ELEX_LOADER_ERROR=false
 
+    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
+    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
+    echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"
+
     local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
     districts & PIDDISTRICTS=$!
@@ -54,17 +58,13 @@ for (( i=1; i<100000; i+=1 )); do
         views
 
         echo "Results time elapsed:" $SECONDS"s"
+        echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+        cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
-        echo "Total time elapsed:" $SECONDS"s"
+        echo "Total time elapsed (A):" $SECONDS"s"
     fi
 
     export ERROR=false
-
-    echo "Results time elapsed:" $SECONDS"s"
-    echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
-
-    echo "Total time elapsed:" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
