@@ -23,6 +23,8 @@ fi
 
 for (( i=1; i<100000; i+=1 )); do
 
+    echo "0" > /tmp/elex_error.txt
+
     cd /home/ubuntu/elex-loader/
 
     if [ -f /tmp/elex_loader_timeout.sh ]; then
@@ -39,8 +41,6 @@ for (( i=1; i<100000; i+=1 )); do
     set_temp_tables
 
     echo "ELEX LOADER downloading files."
-
-    export ELEX_LOADER_ERROR="0"
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
