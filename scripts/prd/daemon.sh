@@ -1,7 +1,7 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/stg/_pre.sh
-. /home/ubuntu/elex-loader/scripts/stg/_results.sh
-. /home/ubuntu/elex-loader/scripts/stg/_views.sh
+. /home/ubuntu/elex-loader/scripts/prd/_pre.sh
+. /home/ubuntu/elex-loader/scripts/prd/_results.sh
+. /home/ubuntu/elex-loader/scripts/prd/_views.sh
 . /etc/environment
 
 if [[ ! -z $1 ]] ; then 

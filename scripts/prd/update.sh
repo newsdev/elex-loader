@@ -1,8 +1,8 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/stg/_post.sh
-. /home/ubuntu/elex-loader/scripts/stg/_pre.sh
-. /home/ubuntu/elex-loader/scripts/stg/_results.sh
-. /home/ubuntu/elex-loader/scripts/stg/_views.sh
+. /home/ubuntu/elex-loader/scripts/prd/_post.sh
+. /home/ubuntu/elex-loader/scripts/prd/_pre.sh
+. /home/ubuntu/elex-loader/scripts/prd/_results.sh
+. /home/ubuntu/elex-loader/scripts/prd/_views.sh
 
 if [[ ! -z $1 ]] ; then 
     RACEDATE=$1 
@@ -18,6 +18,11 @@ pre
 set_temp_tables
 
 echo "0" > /tmp/elex_error.txt
+
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
+echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
+
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
