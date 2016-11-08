@@ -12,7 +12,7 @@ if [ -f /tmp/elex_loader_timeout.sh ]; then
 fi
 
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
-    ELEX_LOADER_TIMEOUT=30
+    ELEX_LOADER_TIMEOUT=5
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
@@ -50,14 +50,11 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ ! $ELEX_LOADER_ERROR ] ; then
+    if [ !$ELEX_LOADER_ERROR ] ; then
         copy_results
         views
 
         echo "Results time elapsed:" $SECONDS"s"
-        echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-        cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
-
         echo "Total time elapsed (A):" $SECONDS"s"
 
     fi
