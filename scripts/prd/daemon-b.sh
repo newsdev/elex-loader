@@ -22,7 +22,11 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
 
+    SECONDS=0
+
     cd /home/ubuntu/election-2016/LATEST/ && NODE_PROCESS=B npm run post-update-b "$RACEDATE"
+
+    echo "Total time elapsed (B):" $SECONDS"s"
 
     sleep $ELEX_LOADER_TIMEOUT
 
