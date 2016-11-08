@@ -1,5 +1,4 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_post.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
@@ -23,6 +22,8 @@ if [[ -z $AP_API_BASE_URL ]] ; then
 fi
 
 for (( i=1; i<100000; i+=1 )); do
+
+    cd /home/ubuntu/elex-loader/
 
     if [ -f /tmp/elex_loader_timeout.sh ]; then
         . /tmp/elex_loader_timeout.sh
@@ -61,6 +62,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Results time elapsed:" $SECONDS"s"
     echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     echo "Total time elapsed:" $SECONDS"s"
 

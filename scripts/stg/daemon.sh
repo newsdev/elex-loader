@@ -23,6 +23,8 @@ fi
 
 for (( i=1; i<100000; i+=1 )); do
 
+    cd /home/ubuntu/elex-loader/
+
     if [ -f /tmp/elex_loader_timeout.sh ]; then
         . /tmp/elex_loader_timeout.sh
     fi
@@ -60,6 +62,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "Results time elapsed:" $SECONDS"s"
     echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+    cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
     echo "Total time elapsed:" $SECONDS"s"
 
