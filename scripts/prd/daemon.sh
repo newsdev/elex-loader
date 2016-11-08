@@ -22,6 +22,8 @@ fi
 
 for (( i=1; i<100000; i+=1 )); do
 
+    echo "0" > /tmp/elex_error.txt
+
     cd /home/ubuntu/elex-loader/
 
     if [ -f /tmp/elex_loader_timeout.sh ]; then
@@ -52,18 +54,20 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ $ELEX_LOADER_ERROR == "0" ] ; then
-        copy_results
-        views
+    while read p; do
+        if [ $p == "0" ] ; then
+            copy_results
+            views
 
-        echo "Results time elapsed:" $SECONDS"s"
-        echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-        cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+            echo "Results time elapsed:" $SECONDS"s"
+            echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+            cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
-        echo "Total time elapsed (A):" $SECONDS"s"
-    fi
+            echo "Total time elapsed (A):" $SECONDS"s"
+        fi
+    done </tmp/elex_error.txt
 
-    export ERROR="0"
+    echo "0" > /tmp/elex_error.txt
 
     sleep $ELEX_LOADER_TIMEOUT
 

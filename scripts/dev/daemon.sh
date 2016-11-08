@@ -22,6 +22,8 @@ fi
 
 for (( i=1; i<100000; i+=1 )); do
 
+    echo "0" > /tmp/elex_error.txt
+
     if [ -f /tmp/elex_loader_timeout.sh ]; then
         . /tmp/elex_loader_timeout.sh
     fi
@@ -37,8 +39,6 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "ELEX LOADER downloading files."
 
-    export ELEX_LOADER_ERROR="0"
-
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true&test=true"
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false&test=true"
     echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true&test=true"
@@ -50,16 +50,17 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ $ELEX_LOADER_ERROR == "0" ] ; then
-        copy_results
-        views
+    while read p; do
+        if [ $p == "0" ] ; then
+            copy_results
+            views
 
-        echo "Results time elapsed:" $SECONDS"s"
-        echo "Total time elapsed (A):" $SECONDS"s"
+            echo "Results time elapsed:" $SECONDS"s"
+            echo "Total time elapsed (A):" $SECONDS"s"
+        fi
+    done </tmp/elex_error.txt
 
-    fi
-
-    export ERROR="0"
+    echo "0" > /tmp/elex_error.txt
 
     sleep $ELEX_LOADER_TIMEOUT
 

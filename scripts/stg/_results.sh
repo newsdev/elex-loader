@@ -34,7 +34,7 @@ function districts {
     if get_districts; then
         load_districts
     else
-        export ELEX_LOADER_ERROR="1"
+        echo "1" > /tmp/elex_error.txt
         echo 'ELEX LOADER error: Districts failed to download.'
     fi
 }
@@ -43,7 +43,7 @@ function local_results {
     if get_local_results; then
         load_local_results
     else
-        export ELEX_LOADER_ERROR="1"
+        echo "1" > /tmp/elex_error.txt
         echo 'ELEX LOADER error: Local results failed to download.'
     fi
 }
@@ -52,7 +52,7 @@ function national_results {
     if get_national_results; then
         load_national_results
     else
-        export ELEX_LOADER_ERROR="1"
+        echo "1" > /tmp/elex_error.txt
         echo 'ELEX LOADER error: National results failed to download.'
     fi
 }

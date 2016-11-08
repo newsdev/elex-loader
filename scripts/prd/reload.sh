@@ -1,5 +1,4 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
@@ -23,7 +22,7 @@ pre
 set_temp_tables
 set_live_tables
 
-export ELEX_LOADER_ERROR=false
+echo "0" > /tmp/elex_error.txt
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
@@ -32,14 +31,17 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-if [ ! $ELEX_LOADER_ERROR ] ; then
-    copy_results
-    overrides
-    views
+while read p; do
+    if [ $p == "0" ] ; then
+        copy_results
+        views
 
-    echo "Results time elapsed:" $SECONDS"s"
+        echo "Results time elapsed:" $SECONDS"s"
+        echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
+        cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
-    echo "Total time elapsed:" $SECONDS"s"
-fi
+        echo "Total time elapsed (A):" $SECONDS"s"
+    fi
+done </tmp/elex_error.txt
 
-export ERROR=false
+echo "0" > /tmp/elex_error.txt

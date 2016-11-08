@@ -17,7 +17,7 @@ TIMESTAMP=$(date +"%s")
 pre
 set_temp_tables
 
-export ELEX_LOADER_ERROR=false
+echo "0" > /tmp/elex_error.txt
 
 local_results & PIDLOCAL=$!
 national_results & PIDNATIONAL=$!
@@ -26,13 +26,16 @@ wait $PIDDISTRICTS
 wait $PIDLOCAL
 wait $PIDNATIONAL
 
-if [ ! $ELEX_LOADER_ERROR ] ; then
-    copy_results
-    views
+while read p; do
+    if [ $p == "0" ] ; then
+        copy_results
+        views
 
-    echo "Results time elapsed:" $SECONDS"s"
+        echo "Results time elapsed:" $SECONDS"s"
+        echo "Total time elapsed (A):" $SECONDS"s"
+    fi
+done </tmp/elex_error.txt
 
-    echo "Total time elapsed:" $SECONDS"s"
-fi
+echo "0" > /tmp/elex_error.txt
 
 export ERROR=false
