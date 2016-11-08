@@ -53,7 +53,7 @@ for (( i=1; i<100000; i+=1 )); do
     wait $PIDLOCAL
     wait $PIDNATIONAL
 
-    if [ $ELEX_LOADER_ERROR == "1" ] ; then
+    if [ $ELEX_LOADER_ERROR == "0" ] ; then
         copy_results
         views
 
