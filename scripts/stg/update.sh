@@ -32,8 +32,6 @@ while read p; do
         views
 
         echo "Results time elapsed:" $SECONDS"s"
-        echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-        cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
 
         echo "Total time elapsed (A):" $SECONDS"s"
     fi

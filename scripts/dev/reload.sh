@@ -34,6 +34,7 @@ wait $PIDNATIONAL
 while read p; do
     if [ $p == "0" ] ; then
         copy_results
+        overrides
         views
 
         echo "Results time elapsed:" $SECONDS"s"

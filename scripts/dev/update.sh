@@ -1,5 +1,4 @@
 #!/bin/bash
-. scripts/dev/_post.sh
 . scripts/dev/_pre.sh
 . scripts/dev/_results.sh
 . scripts/dev/_views.sh
