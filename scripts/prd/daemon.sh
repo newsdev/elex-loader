@@ -4,8 +4,8 @@
 . /home/ubuntu/elex-loader/scripts/prd/_views.sh
 . /etc/environment
 
-if [[ ! -z $1 ]] ; then 
-    RACEDATE=$1 
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
 fi
 
 if [ -f /tmp/elex_loader_timeout.sh ]; then
@@ -31,7 +31,7 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
-    
+
     SECONDS=0
 
     TIMESTAMP=$(date +"%s")
@@ -42,14 +42,11 @@ for (( i=1; i<100000; i+=1 )); do
     echo "ELEX LOADER downloading files."
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
-    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_LOC_KEY&format=json&level=ru&national=false"
     echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
 
-    local_results & PIDLOCAL=$!
     national_results & PIDNATIONAL=$!
     districts & PIDDISTRICTS=$!
     wait $PIDDISTRICTS
-    wait $PIDLOCAL
     wait $PIDNATIONAL
 
     while read p; do
