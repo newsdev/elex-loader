@@ -55,8 +55,8 @@ for (( i=1; i<100000; i+=1 )); do
             views
 
             echo "Results time elapsed:" $SECONDS"s"
-            echo $(readlink -f /home/ubuntu/election-2016/LATEST/)
-            cd /home/ubuntu/election-2016/LATEST/ && npm run post-update "$RACEDATE"
+            echo $(readlink -f /home/ubuntu/election-2017/LATEST/)
+            cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
 
             echo "Total time elapsed (A):" $SECONDS"s"
         fi
