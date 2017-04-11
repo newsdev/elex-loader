@@ -41,13 +41,13 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo "ELEX LOADER downloading files."
 
-    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+    echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
     echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
 
-    national_results & PIDNATIONAL=$!
+    results & PIDRESULTS=$!
     districts & PIDDISTRICTS=$!
     wait $PIDDISTRICTS
-    wait $PIDNATIONAL
+    wait $PIDRESULTS
 
     while read p; do
         if [ $p == "0" ] ; then

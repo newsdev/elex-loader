@@ -24,13 +24,13 @@ set_live_tables
 
 echo "0" > /tmp/elex_error.txt
 
-echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru&national=true"
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
 echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
 
-national_results & PIDNATIONAL=$!
+results & PIDRESULTS=$!
 districts & PIDDISTRICTS=$!
 wait $PIDDISTRICTS
-wait $PIDNATIONAL
+wait $PIDRESULTS
 
 while read p; do
     if [ $p == "0" ] ; then
