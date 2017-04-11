@@ -13,7 +13,7 @@ if [ -f /tmp/elex_loader_timeout.sh ]; then
 fi
 
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
-    ELEX_LOADER_TIMEOUT=30
+    ELEX_LOADER_TIMEOUT=15
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
@@ -42,11 +42,8 @@ for (( i=1; i<100000; i+=1 )); do
     echo "ELEX LOADER downloading files."
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
-    echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
 
     results & PIDRESULTS=$!
-    districts & PIDDISTRICTS=$!
-    wait $PIDDISTRICTS
     wait $PIDRESULTS
 
     while read p; do

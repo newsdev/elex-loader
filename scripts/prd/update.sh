@@ -20,12 +20,8 @@ set_temp_tables
 echo "0" > /tmp/elex_error.txt
 
 echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
-echo $AP_API_BASE_URL"elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=district&national=true"
-
 
 results & PIDRESULTS=$!
-districts & PIDDISTRICTS=$!
-wait $PIDDISTRICTS
 wait $PIDRESULTS
 
 while read p; do
