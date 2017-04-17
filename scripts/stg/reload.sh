@@ -1,12 +1,11 @@
 #!/bin/bash
-. /home/ubuntu/elex-loader/scripts/stg/_districts.sh
 . /home/ubuntu/elex-loader/scripts/stg/_overrides.sh
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
 . /home/ubuntu/elex-loader/scripts/stg/_views.sh
 
-if [[ ! -z $1 ]] ; then 
-    RACEDATE=$1 
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
 fi
 
 if [[ -z $OVERRIDE_DIR ]] ; then
@@ -25,12 +24,10 @@ set_live_tables
 
 echo "0" > /tmp/elex_error.txt
 
-local_results & PIDLOCAL=$!
-national_results & PIDNATIONAL=$!
-districts & PIDDISTRICTS=$!
-wait $PIDDISTRICTS
-wait $PIDLOCAL
-wait $PIDNATIONAL
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
+
+results & PIDRESULTS=$!
+wait $PIDRESULTS
 
 while read p; do
     if [ $p == "0" ] ; then

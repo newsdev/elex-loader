@@ -4,8 +4,8 @@
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
 . /home/ubuntu/elex-loader/scripts/stg/_views.sh
 
-if [[ ! -z $1 ]] ; then 
-    RACEDATE=$1 
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
@@ -19,12 +19,10 @@ set_temp_tables
 
 echo "0" > /tmp/elex_error.txt
 
-local_results & PIDLOCAL=$!
-national_results & PIDNATIONAL=$!
-districts & PIDDISTRICTS=$!
-wait $PIDDISTRICTS
-wait $PIDLOCAL
-wait $PIDNATIONAL
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
+
+results & PIDRESULTS=$!
+wait $PIDRESULTS
 
 while read p; do
     if [ $p == "0" ] ; then

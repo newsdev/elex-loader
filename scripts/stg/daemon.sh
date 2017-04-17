@@ -4,8 +4,8 @@
 . /home/ubuntu/elex-loader/scripts/stg/_views.sh
 . /etc/environment
 
-if [[ ! -z $1 ]] ; then 
-    RACEDATE=$1 
+if [[ ! -z $1 ]] ; then
+    RACEDATE=$1
 fi
 
 if [ -f /tmp/elex_loader_timeout.sh ]; then
@@ -13,7 +13,7 @@ if [ -f /tmp/elex_loader_timeout.sh ]; then
 fi
 
 if [[ -z $ELEX_LOADER_TIMEOUT ]] ; then
-    ELEX_LOADER_TIMEOUT=30
+    ELEX_LOADER_TIMEOUT=15
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
@@ -31,7 +31,7 @@ for (( i=1; i<100000; i+=1 )); do
     fi
 
     echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
-    
+
     SECONDS=0
 
     TIMESTAMP=$(date +"%s")
