@@ -1,22 +1,24 @@
 DROP TABLE IF EXISTS override_candidates CASCADE;
 
 create table override_candidates as
-    select distinct candidate_unique_id, 
-            raceid, 
+    select distinct candidate_unique_id,
+            raceid,
             statepostal,
             cast(null AS VARCHAR(255)) as reportingunitid,
-            cast(false AS BOOLEAN) as nyt_winner, 
+            cast(false AS BOOLEAN) as nyt_winner,
+            cast(false AS BOOLEAN) as nyt_runoff,
             cast(null AS VARCHAR(255)) as nyt_name,
             cast(0 AS SMALLINT) as nyt_electwon
         from results where level in ('state', 'district') and officeid != 'P'
         group by raceid, statepostal, candidate_unique_id;
 
 insert into override_candidates
-    select distinct candidate_unique_id, 
-            raceid, 
+    select distinct candidate_unique_id,
+            raceid,
             statepostal,
             reportingunitid,
-            cast(false AS BOOLEAN) as nyt_winner, 
+            cast(false AS BOOLEAN) as nyt_winner,
+            cast(false AS BOOLEAN) as nyt_runoff,
             cast(null AS VARCHAR(255)) as nyt_name,
             cast(0 AS SMALLINT) as nyt_electwon
         from results where level in ('state', 'district') and officeid = 'P'
