@@ -4,35 +4,41 @@
 # and when installed into Node modules
 SCRIPT_DIR=$(dirname $BASH_SOURCE)
 
+. $SCRIPT_DIR'/_post.sh'
 . $SCRIPT_DIR'/_pre.sh'
 . $SCRIPT_DIR'/_results.sh'
-. $SCRIPT_DIR'/_districts.sh'
-. $SCRIPT_DIR'/_views.sh'
-. $SCRIPT_DIR'/_post.sh'
+# . $SCRIPT_DIR'/_views.sh'
 
 if [[ ! -z $1 ]] ; then
     RACEDATE=$1
-fi
-
-AP_TEST_ARG=''
-if [[ "$AP_TEST" = "true" ]] ; then
-    AP_TEST_ARG='&test=true'
 fi
 
 if [[ -z $AP_API_BASE_URL ]] ; then
     AP_API_BASE_URL="http://api.ap.org/v2/"
 fi
 
+TIMESTAMP=$(date +"%s")
+
 pre
-set_temp_tables
+#set_temp_tables
 
-local_results & PIDLOCAL=$!
-national_results & PIDNATIONAL=$!
-districts & PIDDISTRICTS=$!
-wait $PIDDISTRICTS
-wait $PIDLOCAL
-wait $PIDNATIONAL
+echo "0" > elex_error.txt
 
-copy_results
-views
-post
+echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
+
+results & PIDRESULTS=$!
+wait $PIDRESULTS
+
+while read p; do
+    if [ $p == "0" ] ; then
+        #copy_results
+        #views
+
+        echo "Results time elapsed:" $SECONDS"s"
+
+        echo "Total time elapsed (A):" $SECONDS"s"
+    fi
+done <elex_error.txt
+
+echo "0" > elex_error.txt
+

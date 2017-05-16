@@ -2,3 +2,5 @@
 *.pyc
 *.pyo
 overrides/*.csv
+results
+elex_error.txt
