@@ -15,7 +15,9 @@ function get_districts {
 }
 
 function load_results {
-    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json > /tmp/results_national_$RACEDATE.csv
+    echo "Wrote /tmp/results_national_$RACEDATE.csv"
+    cat /tmp/results_national_$RACEDATE.csv| psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
 function load_districts {
