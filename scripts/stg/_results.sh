@@ -20,6 +20,11 @@ function load_results {
     cat /tmp/results_national_$RACEDATE.csv | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
 
+function load_results_csv {
+    elex results $RACEDATE -t -d /tmp/results_national_$RACEDATE.json > /tmp/results_national_$RACEDATE.csv
+    echo "Wrote /tmp/results_national_$RACEDATE.csv"
+}
+
 function load_districts {
     elex results $RACEDATE -t -d /tmp/results_district_$RACEDATE.json | grep 'Z,district,\|,lastupdated,level,national,' | psql -h $ELEX_DB_HOST -U elex -d elex_$RACEDATE -c "COPY results_temp FROM stdin DELIMITER ',' CSV HEADER;"
 }
@@ -36,6 +41,15 @@ function districts {
 function results {
     if get_results; then
         load_results
+    else
+        echo "1" > /tmp/elex_error.txt
+        echo 'ELEX LOADER error: Results failed to download.'
+    fi
+}
+
+function results_csv {
+    if get_results; then
+        load_results_csv
     else
         echo "1" > /tmp/elex_error.txt
         echo 'ELEX LOADER error: Results failed to download.'
