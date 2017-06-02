@@ -48,7 +48,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     while read p; do
         if [ $p == "0" ] ; then
-            load_results_csv
+            # load_results_csv
             # views
 
             echo "Results time elapsed:" $SECONDS"s"
