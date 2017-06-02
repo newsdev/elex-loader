@@ -43,7 +43,7 @@ for (( i=1; i<100000; i+=1 )); do
 
     echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
 
-    results & PIDRESULTS=$!
+    results_csv & PIDRESULTS=$!
     wait $PIDRESULTS
 
     while read p; do
@@ -52,7 +52,7 @@ for (( i=1; i<100000; i+=1 )); do
             # views
 
             echo "Results time elapsed:" $SECONDS"s"
-            echo $(readlink -f /home/ubuntu/election-2017/LATEST/)
+            # echo $(readlink -f /home/ubuntu/election-2017/LATEST/)
             cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
 
             echo "Total time elapsed (A):" $SECONDS"s"

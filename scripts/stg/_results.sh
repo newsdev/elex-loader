@@ -49,7 +49,7 @@ function results {
 
 function results_csv {
     if get_results; then
-        load_results_csv
+        # load_results_csv
     else
         echo "1" > /tmp/elex_error.txt
         echo 'ELEX LOADER error: Results failed to download.'
