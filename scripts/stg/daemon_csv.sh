@@ -30,7 +30,7 @@ for (( i=1; i<100000; i+=1 )); do
         . /tmp/elex_loader_timeout.sh
     fi
 
-    echo "Timeout:" $ELEX_LOADER_TIMEOUT"s"
+    echo "----- LOADING WITH TIMEOUT:" $ELEX_LOADER_TIMEOUT"s -----"
 
     SECONDS=0
 
