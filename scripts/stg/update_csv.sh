@@ -27,3 +27,5 @@ results_csv
 echo "Results time elapsed:" $SECONDS"s"
 
 echo "0" > /tmp/elex_error.txt
+
+exit 0
