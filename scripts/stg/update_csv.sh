@@ -22,18 +22,8 @@ echo "0" > /tmp/elex_error.txt
 
 echo $AP_API_BASE_URL"/elections/$RACEDATE?apiKey=$AP_NAT_KEY&format=json&level=ru"
 
-results_csv & PIDRESULTS=$!
-wait $PIDRESULTS
+results_csv
 
-while read p; do
-    if [ $p == "0" ] ; then
-        # copy_results
-        # views
-
-        echo "Results time elapsed:" $SECONDS"s"
-
-        echo "Total time elapsed (A):" $SECONDS"s"
-    fi
-done </tmp/elex_error.txt
+echo "Results time elapsed:" $SECONDS"s"
 
 echo "0" > /tmp/elex_error.txt
