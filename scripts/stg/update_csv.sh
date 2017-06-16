@@ -1,6 +1,7 @@
 #!/bin/bash
 . /home/ubuntu/elex-loader/scripts/stg/_pre.sh
 . /home/ubuntu/elex-loader/scripts/stg/_results.sh
+. /etc/environment
 
 if [[ ! -z $1 ]] ; then
     RACEDATE=$1
