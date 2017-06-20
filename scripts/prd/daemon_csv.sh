@@ -29,7 +29,12 @@ for (( i=1; i<100000; i+=1 )); do
     if [ -f /tmp/elex_loader_timeout.sh ]; then
         . /tmp/elex_loader_timeout.sh
     fi
-
+    
+    echo "=============================================================="
+    echo "      START DOWNLOAD CYCLE  $(TZ=America/New_York date)      "
+    echo "=============================================================="
+    echo " "
+    
     echo "------- LOAD CSV WITH TIMEOUT:" $ELEX_LOADER_TIMEOUT"s -------"
 
     SECONDS=0
