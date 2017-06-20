@@ -61,6 +61,9 @@ for (( i=1; i<100000; i+=1 )); do
             cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
 
             echo "Total time elapsed (A):" $SECONDS"s"
+            echo ""
+            echo ""
+            echo ""
         fi
     done </tmp/elex_error.txt
 
