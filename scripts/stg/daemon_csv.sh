@@ -31,7 +31,7 @@ for (( i=1; i<100000; i+=1 )); do
     fi
     
     echo "=============================================================="
-    echo "      START DOWNLOAD CYCLE  $(date)      "
+    echo "      START DOWNLOAD CYCLE  $(TZ=America/New_York date)      "
     echo "=============================================================="
     echo " "
     
