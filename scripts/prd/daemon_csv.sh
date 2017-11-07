@@ -42,7 +42,6 @@ for (( i=1; i<100000; i+=1 )); do
     TIMESTAMP=$(date +"%s")
 
     pre
-    # set_temp_tables
 
     echo "ELEX LOADER downloading files."
 
@@ -51,18 +50,23 @@ for (( i=1; i<100000; i+=1 )); do
     results_csv & PIDRESULTS=$!
     wait $PIDRESULTS
 
+    # while read p; do
+    #     if [ $p == "0" ] ; then
+    #         echo "Results time elapsed:" $SECONDS"s"
+    #         cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
+    #         echo "Total time elapsed (A):" $SECONDS"s"
+    #     fi
+    # done </tmp/elex_error.txt
+
     while read p; do
-        if [ $p == "0" ] ; then
-            # load_results
-            # views
-
-            echo "Results time elapsed:" $SECONDS"s"
-            # echo $(readlink -f /home/ubuntu/election-2017/LATEST/)
-            cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
-
-            echo "Total time elapsed (A):" $SECONDS"s"
+        if [ $p == "1" ] ; then
+            echo "There was an error downloading the AP results; running post-update."
         fi
     done </tmp/elex_error.txt
+
+    echo "Results time elapsed:" $SECONDS"s"
+    cd /home/ubuntu/election-2017/LATEST/ && npm run post-update "$RACEDATE"
+    echo "Total time elapsed (A):" $SECONDS"s"
 
     echo "0" > /tmp/elex_error.txt
 

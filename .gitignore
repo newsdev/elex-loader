@@ -4,3 +4,5 @@
 overrides/*.csv
 results
 elex_error.txt
+__pycache__
+.vscode
